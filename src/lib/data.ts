@@ -1,9 +1,6 @@
-import { LucideIcon } from "lucide-react";
-
 export interface Skill {
   name: string;
   category: "frontend" | "backend" | "devops" | "tools" | "languages";
-  icon?: LucideIcon;
 }
 
 export interface Project {
@@ -31,7 +28,6 @@ export interface Experience {
 export interface SocialLink {
   name: string;
   url: string;
-  icon: LucideIcon;
 }
 
 export const personalInfo = {
@@ -48,22 +44,18 @@ export const socialLinks: SocialLink[] = [
   {
     name: "GitHub",
     url: "https://github.com/MaheshBoda-26",
-    icon: null as any, // Will be replaced with actual icon component
   },
   {
     name: "LinkedIn",
     url: "https://linkedin.com/in/maheshboda",
-    icon: null as any,
   },
   {
     name: "Twitter",
     url: "https://twitter.com/maheshboda",
-    icon: null as any,
   },
   {
     name: "Email",
     url: "mailto:maheshboda@example.com",
-    icon: null as any,
   },
 ];
 

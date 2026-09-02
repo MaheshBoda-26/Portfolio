@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import Image from "next/image";
 import { GitBranch, ExternalLink, Code, Zap, Brain, Server, Smartphone, Layers, Star } from "lucide-react";
 import { projects, Project } from "@/lib/data";
 
@@ -34,10 +35,12 @@ export function Projects() {
       <Card key={project.id} className={cn("group overflow-hidden transition-all hover:shadow-xl", project.featured && "ring-2 ring-primary/20")}>
         <div className="relative aspect-video bg-neutral-100 dark:bg-neutral-800 overflow-hidden">
           {project.image ? (
-            <img
+            <Image
               src={project.image}
               alt={project.title}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
@@ -146,11 +149,9 @@ export function Projects() {
         </div>
 
         <div className="mt-12 text-center">
-          <Button variant="outline" size="lg" asChild>
-            <a href="https://github.com/MaheshBoda-26" target="_blank" rel="noopener noreferrer">
-              View All on GitHub
-              <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
-            </a>
+          <Button variant="outline" size="lg" onClick={() => window.open("https://github.com/MaheshBoda-26", "_blank", "noopener,noreferrer")}>
+            View All on GitHub
+            <ExternalLink className="ml-2 h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
       </div>

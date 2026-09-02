@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { GitBranch, Mail, Heart } from "lucide-react";
+import { Mail, Heart } from "lucide-react";
 import { GithubIcon, LinkedInIcon, TwitterIcon } from "@/components/common/social-icons";
 import { socialLinks } from "@/lib/data";
 

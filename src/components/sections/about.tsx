@@ -4,10 +4,9 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { ChevronRight, Code2, Server, Database, Wrench, Terminal, Globe, Briefcase, Mail, Zap, Brain } from "lucide-react";
-import { personalInfo, skills, experience, navItems } from "@/lib/data";
+import { ChevronRight, Code2, Server, Database, Wrench, Terminal, Globe, Briefcase, Mail, Zap } from "lucide-react";
+import { personalInfo, skills, experience } from "@/lib/data";
 
 const skillCategories = [
   { key: "frontend", label: "Frontend", icon: Code2, color: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20" },

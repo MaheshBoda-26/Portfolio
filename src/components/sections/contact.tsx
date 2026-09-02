@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -59,7 +57,7 @@ export function Contact() {
       } else {
         throw new Error("Failed to send message");
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus("error");
       toast({
         title: "Something went wrong",
@@ -92,7 +90,7 @@ export function Contact() {
               <CardHeader>
                 <CardTitle className="text-2xl">Send a Message</CardTitle>
                 <CardDescription>
-                  Fill out the form and I'll get back to you within 24 hours.
+                  Fill out the form and I&apos;ll get back to you within 24 hours.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -233,9 +231,9 @@ export function Contact() {
           <div>
             <Card className="h-full">
               <CardHeader>
-                <CardTitle className="text-2xl">Let's Build Something</CardTitle>
+                <CardTitle className="text-2xl">Let&apos;s Build Something</CardTitle>
                 <CardDescription>
-                  I'm always open to discussing new opportunities, interesting projects, or just chatting about tech.
+                  I&apos;m always open to discussing new opportunities, interesting projects, or just chatting about tech.
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col justify-between h-full">
@@ -291,7 +289,7 @@ export function Contact() {
 
                 <div className="pt-6 border-t border-neutral-200 dark:border-neutral-800">
                   <p className="text-sm text-neutral-500 dark:text-neutral-400 text-center">
-                    "The best way to predict the future is to build it."
+                    &ldquo;The best way to predict the future is to build it.&rdquo;
                   </p>
                 </div>
               </CardContent>

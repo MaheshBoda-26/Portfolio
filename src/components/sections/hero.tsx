@@ -1,12 +1,13 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, GitBranch, Mail, Code, Brain, Server, Zap } from "lucide-react";
 import { LinkedInIcon, TwitterIcon } from "@/components/common/social-icons";
 import { personalInfo, socialLinks } from "@/lib/data";
 
 export function Hero() {
+  const router = useRouter();
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-100/50 via-transparent to-transparent dark:from-neutral-900/50 dark:via-transparent" />
@@ -30,11 +31,11 @@ export function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-fade-in-up" style={{ animationDelay: "300ms" }}>
-            <Button size="lg" className="group w-full sm:w-auto" onClick={() => window.location.href = "#projects"}>
+            <Button size="lg" className="group w-full sm:w-auto" onClick={() => router.push("#projects")}>
               View My Work
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </Button>
-            <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={() => window.location.href = "#contact"}>
+            <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={() => router.push("#contact")}>
               Get In Touch
             </Button>
           </div>
