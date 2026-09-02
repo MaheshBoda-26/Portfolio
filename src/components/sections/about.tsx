@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -28,22 +28,39 @@ const categoryIcons = {
 
 export function About() {
   const [visibleCategories, setVisibleCategories] = useState<Set<number>>(new Set());
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
+    if (observerRef.current) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const index = parseInt(entry.target.getAttribute("data-index") || "0");
-            setVisibleCategories((prev) => new Set([...prev, index]));
+            setVisibleCategories((prev) => {
+              if (prev.has(index)) return prev;
+              return new Set([...prev, index]);
+            });
+            observer.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
     );
 
-    document.querySelectorAll("[data-index]").forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    observerRef.current = observer;
+
+    // Use setTimeout to wait for DOM to be ready
+    const timeout = setTimeout(() => {
+      document.querySelectorAll("[data-index]").forEach((el) => observer.observe(el));
+    }, 0);
+
+    return () => {
+      clearTimeout(timeout);
+      observer.disconnect();
+      observerRef.current = null;
+    };
   }, []);
 
   return (

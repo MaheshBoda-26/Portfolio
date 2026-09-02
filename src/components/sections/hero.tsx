@@ -144,22 +144,8 @@ export function Hero() {
     };
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
-
-  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
-    e.preventDefault();
-    const rect = e.currentTarget.getBoundingClientRect();
-    const touch = e.touches[0];
-    setMousePos({
-      x: touch.clientX - rect.left,
-      y: touch.clientY - rect.top,
-    });
+  const handleMouseLeave = () => {
+    mousePosRef.current = { x: 200, y: 200 };
   };
 
   return (
@@ -178,7 +164,7 @@ export function Hero() {
           style={{ width: "400px", height: "400px" }}
           onMouseMove={handleMouseMove}
           onTouchMove={handleTouchMove}
-          onMouseLeave={() => setMousePos({ x: 200, y: 200 })}
+          onMouseLeave={handleMouseLeave}
           aria-label="Interactive particle simulation"
         />
       </div>
