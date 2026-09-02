@@ -152,7 +152,6 @@ export function Hero() {
     <section id="hero" className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-grid-pattern primary/5" />
 
       {/* Interactive Canvas Simulation */}
       <div className="absolute top-20 left-1/2 -translate-x-1/2 z-10">

@@ -51,7 +51,7 @@ export function Header() {
               </Link>
             </div>
 
-            {/* Desktop Nav Links */}
+            {/* Desktop Nav Links + Social Icons */}
             <div className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
                 <Link
@@ -68,10 +68,8 @@ export function Header() {
                   <Mail className="h-3 w-3" />
                 </Link>
               </Button>
-            </div>
 
-            {/* Social Icons (Desktop) */}
-            <div className="hidden lg:flex items-center space-x-4">
+              {/* Social Icons */}
               <a
                 href="mailto:maheshboda@example.com"
                 className="text-muted-foreground hover:text-primary transition-colors"
@@ -147,26 +145,6 @@ export function Header() {
           )}
         </nav>
       </header>
-
-      {/* Fixed Left Sidebar Navigation */}
-      <aside className="fixed left-0 top-0 bottom-0 z-40 hidden lg:block w-64 pt-16 pb-8 px-4 border-r border-border bg-background/50 backdrop-blur-sm">
-        <div className="sidebar-links flex flex-col space-y-1 h-full overflow-y-auto scrollbar-hide">
-          {sidebarLinks.map((link, index) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className={cn(
-                "sidebar-link fade-in-section",
-                index === 0 ? "is-visible" : ""
-              )}
-              style={{ transitionDelay: `${(index + 1) * 100}ms` }}
-            >
-              <span className="sidebar-slash">/</span>
-              {link.label.toLowerCase()}
-            </Link>
-          ))}
-        </div>
-      </aside>
     </>
   );
 }
