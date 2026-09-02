@@ -1,0 +1,9 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "gazijarin-analysis",
+      "url": "https://www.gazijarin.com/"
+    }
+  ]
+}
