@@ -11,9 +11,10 @@ import { Separator } from "@/components/ui/separator";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Mail, Github, Linkedin, Twitter, MapPin, Send, Loader2, CheckCircle, AlertCircle, Zap, Code, Brain } from "lucide-react";
+import { Mail, GitBranch, MapPin, Send, Loader2, CheckCircle, AlertCircle, Zap, Code, Brain } from "lucide-react";
+import { LinkedInIcon, TwitterIcon } from "@/components/common/social-icons";
 import { personalInfo, socialLinks } from "@/lib/data";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/toast";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -204,9 +205,9 @@ export function Contact() {
                 <div className="space-y-4">
                   {[
                     { name: "Email", href: `mailto:${personalInfo.email}`, icon: Mail, desc: "Best for project inquiries" },
-                    { name: "GitHub", href: socialLinks[0].url, icon: Github, desc: "View my code & contributions" },
-                    { name: "LinkedIn", href: socialLinks[1].url, icon: Linkedin, desc: "Professional networking" },
-                    { name: "Twitter", href: socialLinks[2].url, icon: Twitter, desc: "Follow my thoughts & updates" },
+                    { name: "GitHub", href: socialLinks[0].url, icon: GitBranch, desc: "View my code & contributions" },
+                    { name: "LinkedIn", href: socialLinks[1].url, icon: LinkedInIcon, desc: "Professional networking" },
+                    { name: "Twitter", href: socialLinks[2].url, icon: TwitterIcon, desc: "Follow my thoughts & updates" },
                   ].map((item) => (
                     <a
                       key={item.name}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { GitBranch, Linkedin, Twitter, Mail, Heart } from "lucide-react";
+import { GitBranch, Mail, Heart } from "lucide-react";
+import { GithubIcon, LinkedInIcon, TwitterIcon } from "@/components/common/social-icons";
 import { socialLinks } from "@/lib/data";
 
 export function Footer() {
@@ -28,9 +29,9 @@ export function Footer() {
                   className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors"
                   aria-label={link.name}
                 >
-                  {link.name === "GitHub" && <GitBranch className="h-5 w-5" />}
-                  {link.name === "LinkedIn" && <Linkedin className="h-5 w-5" />}
-                  {link.name === "Twitter" && <Twitter className="h-5 w-5" />}
+                  {link.name === "GitHub" && <GithubIcon className="h-5 w-5" />}
+                  {link.name === "LinkedIn" && <LinkedInIcon className="h-5 w-5" />}
+                  {link.name === "Twitter" && <TwitterIcon className="h-5 w-5" />}
                   {link.name === "Email" && <Mail className="h-5 w-5" />}
                 </a>
               ))}

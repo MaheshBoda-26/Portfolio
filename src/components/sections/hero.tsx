@@ -2,7 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, GitBranch, Linkedin, Twitter, Mail, Code, Brain, Server, Zap } from "lucide-react";
+import { ArrowRight, GitBranch, Mail, Code, Brain, Server, Zap } from "lucide-react";
+import { LinkedInIcon, TwitterIcon } from "@/components/common/social-icons";
 import { personalInfo, socialLinks } from "@/lib/data";
 
 export function Hero() {
@@ -29,14 +30,12 @@ export function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-fade-in-up" style={{ animationDelay: "300ms" }}>
-            <Button size="lg" className="group w-full sm:w-auto" asChild>
-              <a href="#projects">
-                View My Work
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-              </a>
+            <Button size="lg" className="group w-full sm:w-auto" onClick={() => window.location.href = "#projects"}>
+              View My Work
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </Button>
-            <Button size="lg" variant="outline" className="w-full sm:w-auto" asChild>
-              <a href="#contact">Get In Touch</a>
+            <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={() => window.location.href = "#contact"}>
+              Get In Touch
             </Button>
           </div>
 
@@ -51,8 +50,8 @@ export function Hero() {
                 aria-label={link.name}
               >
                 {link.name === "GitHub" && <GitBranch className="h-6 w-6" />}
-                {link.name === "LinkedIn" && <Linkedin className="h-6 w-6" />}
-                {link.name === "Twitter" && <Twitter className="h-6 w-6" />}
+                {link.name === "LinkedIn" && <LinkedInIcon className="h-6 w-6" />}
+                {link.name === "Twitter" && <TwitterIcon className="h-6 w-6" />}
                 {link.name === "Email" && <Mail className="h-6 w-6" />}
               </a>
             ))}

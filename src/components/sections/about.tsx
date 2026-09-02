@@ -160,11 +160,9 @@ export function About() {
                     </div>
                   </div>
                 </div>
-                <Button className="mt-6 w-full" asChild>
-                  <a href={personalInfo.resumeUrl} target="_blank" rel="noopener noreferrer">
-                    Download Resume
-                    <ChevronRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                  </a>
+                <Button className="mt-6 w-full" onClick={() => window.open(personalInfo.resumeUrl, "_blank", "noopener,noreferrer")}>
+                  Download Resume
+                  <ChevronRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </Button>
               </CardContent>
             </Card>
