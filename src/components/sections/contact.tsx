@@ -9,9 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Mail, GitBranch, MapPin, Send, Loader2, CheckCircle, AlertCircle, Zap, Code, Brain } from "lucide-react";
-import { LinkedInIcon, TwitterIcon } from "@/components/common/social-icons";
-import { personalInfo, socialLinks } from "@/lib/data";
+import { Mail, GitBranch, MapPin, Send, Loader2, CheckCircle, AlertCircle, Zap, Code, Brain, Github, Linkedin, Twitter } from "lucide-react";
+import { personalInfo } from "@/lib/data";
 import { toast } from "@/components/ui/toast";
 
 const contactSchema = z.object({
@@ -70,27 +69,30 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 sm:py-28 lg:py-32 bg-white dark:bg-neutral-950">
+    <section id="contact" className="py-20 sm:py-28 lg:py-32 bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-neutral-100 dark:bg-neutral-900 text-sm font-medium text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-800 mb-4">
-            Get In Touch
-          </span>
-          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white mb-6">
-            Let&apos;s work <span className="text-primary">together</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/80 backdrop-blur-sm border border-border mb-4 animate-fade-in-up">
+            <Zap className="h-4 w-4 text-primary" aria-hidden="true" />
+            <span className="text-sm font-medium text-muted-foreground">Contact</span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground mb-6 animate-fade-in-up" style={{ animationDelay: "100ms" }}>
+            Let's work <span className="text-primary">together</span>
           </h2>
-          <p className="text-lg text-neutral-600 dark:text-neutral-300">
-            Have a project in mind or just want to say hi? I&apos;d love to hear from you.
+          <p className="text-lg text-muted-foreground animate-fade-in-up" style={{ animationDelay: "200ms" }}>
+            Have a project in mind or just want to say hi? I'd love to hear from you.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
-          <div className="space-y-8">
-            <Card>
+          {/* Contact Form */}
+          <div className="animate-fade-in-up" style={{ animationDelay: "100ms" }}>
+            <Card className="bg-card/80 backdrop-blur-sm border-border">
               <CardHeader>
                 <CardTitle className="text-2xl">Send a Message</CardTitle>
                 <CardDescription>
-                  Fill out the form and I&apos;ll get back to you within 24 hours.
+                  Fill out the form and I'll get back to you within 24 hours.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -107,7 +109,7 @@ export function Contact() {
                         aria-describedby={errors.name ? "name-error" : undefined}
                       />
                       {errors.name && (
-                        <p id="name-error" className="text-sm text-red-500" role="alert">
+                        <p id="name-error" className="text-sm text-destructive" role="alert">
                           {errors.name.message}
                         </p>
                       )}
@@ -124,7 +126,7 @@ export function Contact() {
                         aria-describedby={errors.email ? "email-error" : undefined}
                       />
                       {errors.email && (
-                        <p id="email-error" className="text-sm text-red-500" role="alert">
+                        <p id="email-error" className="text-sm text-destructive" role="alert">
                           {errors.email.message}
                         </p>
                       )}
@@ -142,7 +144,7 @@ export function Contact() {
                       aria-describedby={errors.subject ? "subject-error" : undefined}
                     />
                     {errors.subject && (
-                      <p id="subject-error" className="text-sm text-red-500" role="alert">
+                      <p id="subject-error" className="text-sm text-destructive" role="alert">
                         {errors.subject.message}
                       </p>
                     )}
@@ -160,7 +162,7 @@ export function Contact() {
                       aria-describedby={errors.message ? "message-error" : undefined}
                     />
                     {errors.message && (
-                      <p id="message-error" className="text-sm text-red-500" role="alert">
+                      <p id="message-error" className="text-sm text-destructive" role="alert">
                         {errors.message.message}
                       </p>
                     )}
@@ -191,49 +193,15 @@ export function Contact() {
                 </form>
               </CardContent>
             </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl">Other Ways to Connect</CardTitle>
-                <CardDescription>
-                  Prefer a different way? Reach out through these channels.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {[
-                    { name: "Email", href: `mailto:${personalInfo.email}`, icon: Mail, desc: "Best for project inquiries" },
-                    { name: "GitHub", href: socialLinks[0].url, icon: GitBranch, desc: "View my code & contributions" },
-                    { name: "LinkedIn", href: socialLinks[1].url, icon: LinkedInIcon, desc: "Professional networking" },
-                    { name: "Twitter", href: socialLinks[2].url, icon: TwitterIcon, desc: "Follow my thoughts & updates" },
-                  ].map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-4 p-4 rounded-lg bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-primary/50 hover:bg-primary/5 transition-colors"
-                    >
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <item.icon className="h-5 w-5 text-primary" aria-hidden="true" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-neutral-900 dark:text-white">{item.name}</p>
-                        <p className="text-sm text-neutral-500 dark:text-neutral-400">{item.desc}</p>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
           </div>
 
-          <div>
-            <Card className="h-full">
+          {/* Contact Info & Social */}
+          <div className="animate-fade-in-left" style={{ animationDelay: "300ms" }}>
+            <Card className="h-full bg-card/80 backdrop-blur-sm border-border">
               <CardHeader>
-                <CardTitle className="text-2xl">Let&apos;s Build Something</CardTitle>
+                <CardTitle className="text-2xl">Let's Build Something</CardTitle>
                 <CardDescription>
-                  I&apos;m always open to discussing new opportunities, interesting projects, or just chatting about tech.
+                  I'm always open to discussing new opportunities, interesting projects, or just chatting about tech.
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col justify-between h-full">
@@ -243,8 +211,8 @@ export function Contact() {
                       <Zap className="h-6 w-6 text-primary" aria-hidden="true" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-neutral-900 dark:text-white">Fast Response</h3>
-                      <p className="text-neutral-600 dark:text-neutral-300 mt-1">
+                      <h3 className="text-lg font-semibold text-foreground">Fast Response</h3>
+                      <p className="text-muted-foreground mt-1">
                         I typically respond within 24 hours. For urgent matters, email is best.
                       </p>
                     </div>
@@ -255,8 +223,8 @@ export function Contact() {
                       <Code className="h-6 w-6 text-primary" aria-hidden="true" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-neutral-900 dark:text-white">Open Source</h3>
-                      <p className="text-neutral-600 dark:text-neutral-300 mt-1">
+                      <h3 className="text-lg font-semibold text-foreground">Open Source</h3>
+                      <p className="text-muted-foreground mt-1">
                         Love contributing to OSS. Check out my GitHub for projects and contributions.
                       </p>
                     </div>
@@ -267,8 +235,8 @@ export function Contact() {
                       <Brain className="h-6 w-6 text-primary" aria-hidden="true" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-neutral-900 dark:text-white">AI & ML Projects</h3>
-                      <p className="text-neutral-600 dark:text-neutral-300 mt-1">
+                      <h3 className="text-lg font-semibold text-foreground">AI & ML Projects</h3>
+                      <p className="text-muted-foreground mt-1">
                         Especially interested in RAG systems, LLM applications, and AI-powered products.
                       </p>
                     </div>
@@ -279,17 +247,77 @@ export function Contact() {
                       <MapPin className="h-6 w-6 text-primary" aria-hidden="true" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-neutral-900 dark:text-white">Location</h3>
-                      <p className="text-neutral-600 dark:text-neutral-300 mt-1">
+                      <h3 className="text-lg font-semibold text-foreground">Location</h3>
+                      <p className="text-muted-foreground mt-1">
                         Based in {personalInfo.location}, open to remote work worldwide.
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-neutral-200 dark:border-neutral-800">
-                  <p className="text-sm text-neutral-500 dark:text-neutral-400 text-center">
-                    &ldquo;The best way to predict the future is to build it.&rdquo;
+                {/* Direct Contact Links */}
+                <div className="pt-6 border-t border-border">
+                  <div className="space-y-4">
+                    <a
+                      href={`mailto:${personalInfo.email}`}
+                      className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/50 hover:bg-primary/5 transition-colors"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <Mail className="h-5 w-5 text-primary" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">Email</p>
+                        <p className="text-sm text-muted-foreground">{personalInfo.email}</p>
+                      </div>
+                    </a>
+                    <a
+                      href="https://github.com/MaheshBoda-26"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/50 hover:bg-primary/5 transition-colors"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <Github className="h-5 w-5 text-primary" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">GitHub</p>
+                        <p className="text-sm text-muted-foreground">View my code & contributions</p>
+                      </div>
+                    </a>
+                    <a
+                      href="https://linkedin.com/in/maheshboda"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/50 hover:bg-primary/5 transition-colors"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <Linkedin className="h-5 w-5 text-primary" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">LinkedIn</p>
+                        <p className="text-sm text-muted-foreground">Professional networking</p>
+                      </div>
+                    </a>
+                    <a
+                      href="https://twitter.com/maheshboda"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/50 hover:bg-primary/5 transition-colors"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <Twitter className="h-5 w-5 text-primary" aria-hidden="true" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">Twitter</p>
+                        <p className="text-sm text-muted-foreground">Follow my thoughts & updates</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t border-border">
+                  <p className="text-sm text-muted-foreground text-center">
+                    "The best way to predict the future is to build it."
                   </p>
                 </div>
               </CardContent>

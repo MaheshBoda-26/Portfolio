@@ -204,6 +204,9 @@ export const experience: Experience[] = [
 export const navItems = [
   { label: "Home", href: "#hero" },
   { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Hardware", href: "#hardware" },
+  { label: "Art", href: "#art" },
   { label: "Contact", href: "#contact" },
 ];
