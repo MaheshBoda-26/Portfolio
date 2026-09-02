@@ -26,79 +26,136 @@
   --color-popover-foreground: var(--popover-foreground);
 }
 
+/* Gazi Jarin Portfolio Color Palette - Dark Theme Default */
 :root {
-  --background: 210 40% 98%;
-  --foreground: 222.2 84% 4.9%;
+  /* Core Navy Palette (Gazi's exact colors) */
+  --navy: #0a192f;
+  --navy-rgb: 10, 25, 47;
+  --dark-navy: #020c1b;
+  --dark-navy-rgb: 2, 12, 27;
+  --lightest-navy: #233554;
+  --lightest-navy-rgb: 35, 53, 84;
 
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
+  /* Accent Colors */
+  --green-bright: #64ffda;
+  --green-bright-rgb: 100, 255, 218;
+  --green-tint: rgba(100, 255, 218, 0.1);
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
+  /* Slate/Text Colors */
+  --slate: #8892b0;
+  --slate-rgb: 136, 146, 176;
+  --light-slate: #a8b2d1;
+  --light-slate-rgb: 168, 178, 209;
+  --lightest-slate: #ccd6f6;
+  --lightest-slate-rgb: 204, 214, 246;
 
-  --primary: 174 100% 69%;
-  --primary-foreground: 222.2 47.4% 11.2%;
+  /* White */
+  --white: #ffffff;
+  --white-rgb: 255, 255, 255;
 
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
+  /* Semantic Color Variables (mapped to Gazi's palette) */
+  --background: var(--navy);
+  --foreground: var(--lightest-slate);
 
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
+  --card: var(--lightest-navy);
+  --card-foreground: var(--lightest-slate);
 
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
+  --popover: var(--lightest-navy);
+  --popover-foreground: var(--lightest-slate);
 
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
+  --primary: var(--green-bright);
+  --primary-foreground: var(--dark-navy);
 
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 174 100% 69%;
+  --secondary: var(--lightest-navy);
+  --secondary-foreground: var(--light-slate);
+
+  --muted: var(--lightest-navy);
+  --muted-foreground: var(--slate);
+
+  --accent: var(--lightest-navy);
+  --accent-foreground: var(--light-slate);
+
+  --destructive: #ff6b6b;
+  --destructive-foreground: var(--white);
+
+  --border: var(--lightest-navy);
+  --input: var(--lightest-navy);
+  --ring: var(--green-bright);
 
   --radius: 0.5rem;
 }
 
-.dark {
-  --background: 206 28% 6%;
-  --foreground: 210 40% 98%;
+/* Light mode (optional - for users who prefer it) */
+.light {
+  --background: #f8f9fa;
+  --foreground: #0a192f;
 
-  --card: 206 28% 8%;
-  --card-foreground: 210 40% 98%;
+  --card: #ffffff;
+  --card-foreground: #0a192f;
 
-  --popover: 206 28% 8%;
-  --popover-foreground: 210 40% 98%;
+  --popover: #ffffff;
+  --popover-foreground: #0a192f;
 
-  --primary: 174 100% 69%;
-  --primary-foreground: 206 28% 6%;
+  --primary: #00b894;
+  --primary-foreground: #ffffff;
 
-  --secondary: 206 18% 15%;
-  --secondary-foreground: 210 40% 98%;
+  --secondary: #e8eaed;
+  --secondary-foreground: #0a192f;
 
-  --muted: 206 18% 15%;
-  --muted-foreground: 215 20.2% 65.1%;
+  --muted: #e8eaed;
+  --muted-foreground: #6b7c93;
 
-  --accent: 206 18% 15%;
-  --accent-foreground: 210 40% 98%;
+  --accent: #e8eaed;
+  --accent-foreground: #0a192f;
 
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
+  --destructive: #dc3545;
+  --destructive-foreground: #ffffff;
 
-  --border: 206 18% 15%;
-  --input: 206 18% 15%;
-  --ring: 174 100% 69%;
+  --border: #dfe3eb;
+  --input: #dfe3eb;
+  --ring: #00b894;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+  html {
+    /* Force dark theme by default */
+    color-scheme: dark;
+  }
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background-color: var(--navy);
+    color: var(--lightest-slate);
+  }
+
+  /* Selection colors */
+  ::selection {
+    background-color: var(--green-tint);
+    color: var(--dark-navy);
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--dark-navy);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--lightest-navy);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--slate);
   }
 }
 
 @layer utilities {
+  /* Animations */
   .animate-fade-in-up {
     animation: fadeInUp 0.6s ease-out forwards;
     opacity: 0;
@@ -158,10 +215,10 @@
 
   @keyframes pulse-glow {
     0%, 100% {
-      box-shadow: 0 0 20px -5px hsl(174 100% 69% / 0.3);
+      box-shadow: 0 0 20px -5px rgba(100, 255, 218, 0.3);
     }
     50% {
-      box-shadow: 0 0 40px -5px hsl(174 100% 69% / 0.6);
+      box-shadow: 0 0 40px -5px rgba(100, 255, 218, 0.6);
     }
   }
 
@@ -169,8 +226,9 @@
     animation: pulse-glow 2s ease-in-out infinite;
   }
 
+  /* Grid pattern background */
   .bg-grid-pattern {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='currentColor'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='%2364ffda' stroke-opacity='0.05'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
     background-size: 32px 32px;
   }
 
@@ -186,6 +244,7 @@
     display: none;
   }
 
+  /* Section styling */
   .section-title {
     @apply font-sans text-3xl font-bold tracking-tight text-foreground;
   }
@@ -194,6 +253,7 @@
     @apply text-primary font-mono text-sm;
   }
 
+  /* Fade-in sections */
   .fade-in-section {
     @apply opacity-0 translate-y-10 transition-all duration-700 ease-out;
   }
@@ -202,8 +262,9 @@
     @apply opacity-100 translate-y-0;
   }
 
+  /* Navigation links */
   .nav-link {
-    @apply relative py-2 text-base font-medium text-muted-foreground hover:text-foreground transition-colors;
+    @apply relative py-2 text-base font-medium text-muted-foreground hover:text-primary transition-colors;
   }
 
   .nav-link::after {
@@ -215,6 +276,7 @@
     @apply w-full;
   }
 
+  /* Project cards */
   .project-card {
     @apply relative overflow-hidden transition-all duration-300 hover:shadow-xl;
   }
@@ -231,6 +293,7 @@
     @apply text-xs px-3 py-1.5 rounded-full border border-border bg-background/80 backdrop-blur-sm;
   }
 
+  /* Sidebar */
   .sidebar-link {
     @apply flex items-center gap-3 px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg;
   }
@@ -243,6 +306,7 @@
     @apply opacity-100;
   }
 
+  /* Carousel */
   .carousel-indicator {
     @apply w-2 h-2 rounded-full bg-muted-foreground/30 transition-all duration-300 cursor-pointer;
   }
@@ -251,6 +315,7 @@
     @apply bg-primary w-6;
   }
 
+  /* Tabs */
   .tab-button {
     @apply relative px-6 py-4 text-left font-medium text-muted-foreground hover:text-foreground transition-colors focus:outline-none;
   }
@@ -263,7 +328,13 @@
     @apply absolute left-0 top-0 h-full w-1 bg-primary transition-all duration-300 ease-out;
   }
 
+  /* Canvas */
   .canvas-container {
     @apply cursor-crosshair touch-none;
+  }
+
+  /* Focus visible for accessibility */
+  .focus-visible-ring:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
   }
 }

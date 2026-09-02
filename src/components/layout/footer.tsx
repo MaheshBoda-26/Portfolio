@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Mail, Heart, Github, Linkedin, Twitter } from "lucide-react";
+import { Mail, Heart } from "lucide-react";
+import { GithubIcon, LinkedInIcon, TwitterIcon } from "@/components/common/social-icons";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -34,7 +35,7 @@ export function Footer() {
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="GitHub"
               >
-                <Github className="h-5 w-5" />
+                <GithubIcon className="h-5 w-5" />
              </a>
               <a
                 href="https://linkedin.com/in/maheshboda"
@@ -43,7 +44,7 @@ export function Footer() {
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="LinkedIn"
               >
-                <Linkedin className="h-5 w-5" />
+                <LinkedInIcon className="h-5 w-5" />
              </a>
               <a
                 href="https://twitter.com/maheshboda"
@@ -52,7 +53,7 @@ export function Footer() {
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Twitter"
               >
-                <Twitter className="h-5 w-5" />
+                <TwitterIcon className="h-5 w-5" />
              </a>
            </div>
          </div>

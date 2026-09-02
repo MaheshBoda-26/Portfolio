@@ -1,10 +1,12 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-import { ExternalLink, Github, Star, Cpu, Zap, Wifi, Monitor, MousePointer, Keyboard, Headphones } from "lucide-react";
+import { ExternalLink, Star, Cpu, Zap, Wifi, Monitor, MousePointer, Keyboard, Headphones } from "lucide-react";
+import { GithubIcon } from "@/components/common/social-icons";
 
 const hardwareProjects = [
   {
@@ -96,7 +98,7 @@ export function Hardware() {
                         className="text-muted-foreground hover:text-primary transition-colors"
                         aria-label={`View ${project.title} on GitHub`}
                       >
-                        <Github className="h-5 w-5" aria-hidden="true" />
+                        <GithubIcon className="h-5 w-5" aria-hidden="true" />
                       </a>
                       <a
                         href="#"

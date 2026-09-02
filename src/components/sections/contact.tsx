@@ -9,7 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Mail, GitBranch, MapPin, Send, Loader2, CheckCircle, AlertCircle, Zap, Code, Brain, Github, Linkedin, Twitter } from "lucide-react";
+import { Mail, GitBranch, MapPin, Send, Loader2, CheckCircle, AlertCircle, Zap, Code, Brain } from "lucide-react";
+import { GithubIcon, LinkedInIcon, TwitterIcon } from "@/components/common/social-icons";
 import { personalInfo } from "@/lib/data";
 import { toast } from "@/components/ui/toast";
 
@@ -277,7 +278,7 @@ export function Contact() {
                       className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/50 hover:bg-primary/5 transition-colors"
                     >
                       <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Github className="h-5 w-5 text-primary" aria-hidden="true" />
+                        <GithubIcon className="h-5 w-5 text-primary" aria-hidden="true" />
                       </div>
                       <div>
                         <p className="font-medium text-foreground">GitHub</p>
@@ -291,7 +292,7 @@ export function Contact() {
                       className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/50 hover:bg-primary/5 transition-colors"
                     >
                       <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Linkedin className="h-5 w-5 text-primary" aria-hidden="true" />
+                        <LinkedInIcon className="h-5 w-5 text-primary" aria-hidden="true" />
                       </div>
                       <div>
                         <p className="font-medium text-foreground">LinkedIn</p>
@@ -305,7 +306,7 @@ export function Contact() {
                       className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 border border-border hover:border-primary/50 hover:bg-primary/5 transition-colors"
                     >
                       <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Twitter className="h-5 w-5 text-primary" aria-hidden="true" />
+                        <TwitterIcon className="h-5 w-5 text-primary" aria-hidden="true" />
                       </div>
                       <div>
                         <p className="font-medium text-foreground">Twitter</p>

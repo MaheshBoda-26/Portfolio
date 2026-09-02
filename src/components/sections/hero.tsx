@@ -4,14 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Mail, Code, Brain, Server, Zap } from "lucide-react";
+import { GithubIcon, LinkedInIcon, TwitterIcon } from "@/components/common/social-icons";
 import { personalInfo } from "@/lib/data";
 
 export function Hero() {
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [animationId, setAnimationId] = useState<number | null>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [particles, setParticles] = useState<Array<{
+  const animationIdRef = useRef<number | null>(null);
+  const mousePosRef = useRef({ x: 200, y: 200 });
+  const particlesRef = useRef<Array<{
     x: number;
     y: number;
     vx: number;
@@ -20,10 +21,12 @@ export function Hero() {
     color: string;
     life: number;
   }>>([]);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+  const rectRef = useRef<DOMRect | null>(null);
 
   // Initialize particles
   useEffect(() => {
-    const initialParticles = Array.from({ length: 50 }, () => ({
+    particlesRef.current = Array.from({ length: 50 }, () => ({
       x: Math.random() * 400,
       y: Math.random() * 400,
       vx: (Math.random() - 0.5) * 0.5,
@@ -32,7 +35,6 @@ export function Hero() {
       color: `hsl(174, 100%, ${Math.random() * 30 + 50}%)`,
       life: 1,
     }));
-    setParticles(initialParticles);
   }, []);
 
   // Animation loop
@@ -43,81 +45,104 @@ export function Hero() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    ctxRef.current = ctx;
+
     // Set canvas size for high DPI
     const dpr = window.devicePixelRatio || 1;
     const rect = canvas.getBoundingClientRect();
+    rectRef.current = rect;
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
     ctx.scale(dpr, dpr);
 
     const animate = () => {
+      const ctx = ctxRef.current;
+      const rect = rectRef.current;
+      if (!ctx || !rect) return;
+
       ctx.clearRect(0, 0, rect.width, rect.height);
 
       // Update and draw particles
-      setParticles((prev) => {
-        const updated = prev.map((p) => {
-          // Attraction to mouse
-          const dx = mousePos.x - p.x;
-          const dy = mousePos.y - p.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const force = Math.min(0.02 / (dist + 1), 0.1);
+      const updated = particlesRef.current.map((p) => {
+        // Attraction to mouse
+        const dx = mousePosRef.current.x - p.x;
+        const dy = mousePosRef.current.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const force = Math.min(0.02 / (dist + 1), 0.1);
 
-          return {
-            ...p,
-            vx: p.vx + dx * force * 0.01 + (Math.random() - 0.5) * 0.01,
-            vy: p.vy + dy * force * 0.01 + (Math.random() - 0.5) * 0.01,
-            x: p.x + p.vx,
-            y: p.y + p.vy,
-            vx: p.vx * 0.99,
-            vy: p.vy * 0.99,
-          };
-        });
-
-        // Draw particles and connections
-        updated.forEach((p, i) => {
-          // Draw connections to nearby particles
-          updated.slice(i + 1).forEach((p2) => {
-            const dx = p.x - p2.x;
-            const dy = p.y - p2.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 80) {
-              ctx.beginPath();
-              ctx.moveTo(p.x, p.y);
-              ctx.lineTo(p2.x, p2.y);
-              ctx.strokeStyle = `hsla(174, 100%, 60%, ${(1 - dist / 80) * 0.15})`;
-              ctx.lineWidth = 0.5;
-              ctx.stroke();
-            }
-          });
-
-          // Draw particle
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-          ctx.fillStyle = p.color;
-          ctx.fill();
-        });
-
-        // Draw mouse attraction point
-        ctx.beginPath();
-        ctx.arc(mousePos.x, mousePos.y, 8, 0, Math.PI * 2);
-        ctx.fillStyle = "hsla(174, 100%, 69%, 0.2)";
-        ctx.fill();
-
-        return updated;
+        return {
+          ...p,
+          vx: p.vx + dx * force * 0.01 + (Math.random() - 0.5) * 0.01,
+          vy: p.vy + dy * force * 0.01 + (Math.random() - 0.5) * 0.01,
+          x: p.x + p.vx,
+          y: p.y + p.vy,
+          vx: p.vx * 0.99,
+          vy: p.vy * 0.99,
+        };
       });
 
+      particlesRef.current = updated;
+
+      // Draw particles and connections
+      updated.forEach((p, i) => {
+        // Draw connections to nearby particles
+        updated.slice(i + 1).forEach((p2) => {
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 80) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `hsla(174, 100%, 60%, ${(1 - dist / 80) * 0.15})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        });
+
+        // Draw particle
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      });
+
+      // Draw mouse attraction point
+      ctx.beginPath();
+      ctx.arc(mousePosRef.current.x, mousePosRef.current.y, 8, 0, Math.PI * 2);
+      ctx.fillStyle = "hsla(174, 100%, 69%, 0.2)";
+      ctx.fill();
+
       const id = requestAnimationFrame(animate);
-      setAnimationId(id);
+      animationIdRef.current = id;
     };
 
     animate();
 
     return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
       }
     };
-  }, [animationId, mousePos]);
+  }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mousePosRef.current = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    const rect = e.currentTarget.getBoundingClientRect();
+    const touch = e.touches[0];
+    mousePosRef.current = {
+      x: touch.clientX - rect.left,
+      y: touch.clientY - rect.top,
+    };
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -209,7 +234,7 @@ export function Hero() {
               className="text-muted-foreground hover:text-primary transition-colors"
               aria-label="GitHub"
             >
-              <Github className="h-6 w-6" />
+              <GithubIcon className="h-6 w-6" />
             </a>
             <a
               href="https://linkedin.com/in/maheshboda"
@@ -218,7 +243,7 @@ export function Hero() {
               className="text-muted-foreground hover:text-primary transition-colors"
               aria-label="LinkedIn"
             >
-              <Linkedin className="h-6 w-6" />
+              <LinkedInIcon className="h-6 w-6" />
             </a>
             <a
               href="https://twitter.com/maheshboda"
@@ -227,7 +252,7 @@ export function Hero() {
               className="text-muted-foreground hover:text-primary transition-colors"
               aria-label="Twitter"
             >
-              <Twitter className="h-6 w-6" />
+              <TwitterIcon className="h-6 w-6" />
             </a>
           </div>
         </div>

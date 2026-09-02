@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Mail, Github, Linkedin, Twitter } from "lucide-react";
+import { Menu, X, Mail } from "lucide-react";
+import { GithubIcon, LinkedInIcon, TwitterIcon } from "@/components/common/social-icons";
 import { navItems } from "@/lib/data";
 import { useMobile } from "@/hooks/use-mobile";
 
@@ -85,7 +86,7 @@ export function Header() {
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="GitHub"
               >
-                <Github className="h-5 w-5" />
+                <GithubIcon className="h-5 w-5" />
               </a>
               <a
                 href="https://linkedin.com/in/maheshboda"
@@ -94,7 +95,7 @@ export function Header() {
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="LinkedIn"
               >
-                <Linkedin className="h-5 w-5" />
+                <LinkedInIcon className="h-5 w-5" />
               </a>
               <a
                 href="https://twitter.com/maheshboda"
@@ -103,7 +104,7 @@ export function Header() {
                 className="text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Twitter"
               >
-                <Twitter className="h-5 w-5" />
+                <TwitterIcon className="h-5 w-5" />
               </a>
             </div>
 
