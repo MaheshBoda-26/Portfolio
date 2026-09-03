@@ -5,8 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { SectionHeader } from "@/components/ui/section-header";
-import { ExternalLink, Star, Cpu, Zap } from "lucide-react";
-import { GithubIcon } from "@/components/common/social-icons";
+import { ExternalLink, Star, Cpu } from "lucide-react";
 
 const hardwareProjects = [
   {
