@@ -1,9 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { SectionHeader } from "@/components/ui/section-header";
-import { GitBranch, ExternalLink, Star, Zap } from "lucide-react";
+import { GitBranch, ExternalLink, Star, Zap, FileText } from "lucide-react";
 import { projects, Project } from "@/lib/data";
 
 const categoryLabels: Record<Project["category"], string> = {
@@ -26,9 +27,14 @@ export function Projects() {
       )}
     >
       <div className="flex items-start justify-between gap-4 mb-3">
-        <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors flex-1">
-          {project.title}
-        </h3>
+        <Link
+          href={`/project/${project.id}`}
+          className="flex-1 block"
+        >
+          <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+            {project.title}
+          </h3>
+        </Link>
         <Badge variant="outline" className="tech-badge flex-shrink-0">
           {categoryLabels[project.category]}
         </Badge>
@@ -46,7 +52,14 @@ export function Projects() {
           </Badge>
         )}
       </div>
-      <div className="flex gap-4">
+      <div className="flex flex-wrap gap-4">
+        <Link
+          href={`/project/${project.id}`}
+          className="text-primary hover:underline font-medium text-sm flex items-center gap-1"
+        >
+          <FileText className="h-4 w-4" />
+          View Details
+        </Link>
         {project.githubUrl && (
           <a
             href={project.githubUrl}
