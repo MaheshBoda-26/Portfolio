@@ -37,7 +37,7 @@ export function Header() {
             {/* Brand */}
             <div className="flex items-center">
               <Link href="#hero" className="text-xl font-bold text-foreground">
-                MB
+                Mahesh Boda
               </Link>
             </div>
 
