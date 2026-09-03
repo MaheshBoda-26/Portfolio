@@ -169,7 +169,7 @@ export default function ProjectDetailClient({ project, logs }: ProjectDetailClie
                           {related.title}
                         </h3>
                         <Badge variant="outline" className="tech-badge flex-shrink-0">
-                          {categoryLabels[related.category]}
+                          {categoryLabels[related.category as keyof typeof categoryLabels]}
                         </Badge>
                       </div>
                       <p className="text-muted-foreground text-sm line-clamp-2 mb-4">
