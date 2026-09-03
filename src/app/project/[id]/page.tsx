@@ -57,7 +57,7 @@ export default function ProjectDetailPage() {
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
                 >
-                  <Github className="h-5 w-5" />
+                  <GithubIcon className="h-5 w-5" />
                   Code
                 </a>
               )}
