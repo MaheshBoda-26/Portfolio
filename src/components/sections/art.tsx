@@ -4,7 +4,8 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-import { Zap, Image as ImageIcon, Palette, Camera, Layers } from "lucide-react";
+import { SectionHeader } from "@/components/ui/section-header";
+import { ExternalLink, Image as ImageIcon, Palette, Camera, Layers, Zap } from "lucide-react";
 
 const artProjects = [
   {
@@ -57,71 +58,60 @@ const categoryIcons: Record<string, typeof ImageIcon> = {
   Traditional: Palette,
   "Data Art": Zap,
   Photography: Camera,
-  "AI Art": Brain,
+  "AI Art": ImageIcon,
 };
-
-import { Brain } from "lucide-react";
 
 export function Art() {
   return (
     <section id="art" className="py-20 sm:py-28 lg:py-32 bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-16">
-          <div className="text-center sm:text-left mb-8 sm:mb-0">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/80 backdrop-blur-sm border border-border mb-4 animate-fade-in-up">
-              <Zap className="h-4 w-4 text-primary" aria-hidden="true" />
-              <span className="text-sm font-medium text-muted-foreground">Art Gallery</span>
-            </div>
-            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground mb-4 animate-fade-in-up" style={{ animationDelay: "100ms" }}>
-              Art <span className="text-primary">Collection</span>
-            </h2>
-            <p className="text-lg text-muted-foreground animate-fade-in-up" style={{ animationDelay: "200ms" }}>
-              A collection of digital and traditional artwork exploring different styles and mediums.
-            </p>
-          </div>
-          <div className="animate-fade-in-up" style={{ animationDelay: "300ms" }}>
-            <a href="#" className="text-primary font-medium hover:underline flex items-center gap-1">
+        <SectionHeader
+          slash="art"
+          title="Art <span className='text-primary'>Collection</span>"
+          subtitle="A collection of digital and traditional artwork exploring different styles and mediums."
+          action={
+            <a href="#" className="text-primary hover:underline font-medium flex items-center gap-1">
               Explore collection
-              <ImageIcon className="h-4 w-4" aria-hidden="true" />
+              <ExternalLink className="h-4 w-4" />
             </a>
-          </div>
-        </div>
+          }
+        />
 
-        {/* Art Grid */}
-        <div className="art-container">
-          <div className="art-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {artProjects.map((art, index) => (
-              <div key={art.id} className="animate-fade-in-up" style={{ animationDelay: `${(index + 1) * 100}ms` }}>
-                <Card className="overflow-hidden group hover:shadow-xl transition-all duration-300">
-                  <div className="relative aspect-square overflow-hidden">
-                    {art.image ? (
-                      <Image
-                        src={art.image}
-                        alt={art.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-muted">
-                        <ImageIcon className="h-16 w-16 text-muted-foreground" aria-hidden="true" />
-                      </div>
-                    )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {artProjects.map((art, index) => (
+            <article
+              key={art.id}
+              className={cn(
+                "bg-card rounded-xl border border-border overflow-hidden hover:border-primary/50 transition-colors group animate-fade-in-up"
+              )}
+              style={{ animationDelay: `${(index + 1) * 100}ms` }}
+            >
+              <div className="relative aspect-square overflow-hidden">
+                {art.image ? (
+                  <Image
+                    src={art.image}
+                    alt={art.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-muted">
+                    <ImageIcon className="h-16 w-16 text-muted-foreground" aria-hidden="true" />
                   </div>
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <Badge variant="outline" className="tech-badge text-xs">
-                        {art.category}
-                      </Badge>
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{art.title}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">{art.description}</p>
-                  </CardContent>
-                </Card>
+                )}
               </div>
-            ))}
-          </div>
+              <CardContent className="p-4">
+                <Badge variant="outline" className="tech-badge text-xs mb-2">
+                  {art.category}
+                </Badge>
+                <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                  {art.title}
+                </h3>
+                <p className="text-sm text-muted-foreground mt-1">{art.description}</p>
+              </CardContent>
+            </article>
+          ))}
         </div>
       </div>
     </section>
