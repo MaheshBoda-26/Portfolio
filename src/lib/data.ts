@@ -16,15 +16,6 @@ export interface Project {
   category: "web" | "mobile" | "ai" | "fullstack" | "other";
 }
 
-export interface Experience {
-  id: string;
-  role: string;
-  company: string;
-  period: string;
-  description: string[];
-  techStack: string[];
-}
-
 export interface SocialLink {
   name: string;
   url: string;
