@@ -18,7 +18,7 @@ export interface Project {
 
 export interface ProjectLogEntry {
   type: "text" | "image" | "list" | "tip";
-  value: string;
+  value?: string;
   title?: string;
   items?: string[];
 }

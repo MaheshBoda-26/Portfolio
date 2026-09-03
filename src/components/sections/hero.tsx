@@ -18,17 +18,16 @@ export function Hero() {
             <TypeAnimation
               sequence={[
                 "/ hi, ",
-                { speed: "humanizer" },
+                100,
                 firstName,
-                { speed: "humanizer" },
+                100,
                 " here.",
               ]}
               wrapper="span"
               className="inline"
-              repeat={false}
-            >
-              {(node) => <span>{node} <span className="animate-cursor-blink text-primary ml-1" aria-hidden="true">|</span></span>}
-            </TypeAnimation>
+              repeat={0}
+            />
+            <span className="animate-cursor-blink text-primary ml-1" aria-hidden="true">|</span>
           </p>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground mb-6 animate-fade-in-up" style={{ animationDelay: "800ms" }}>

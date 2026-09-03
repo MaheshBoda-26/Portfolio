@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Github as GithubIcon, ExternalLink, Code2, Server, Database, Zap, FileText } from "lucide-react";
+import { ArrowLeft, GitBranch, ExternalLink, Code2, Server, Database, Zap, FileText } from "lucide-react";
 import { projects, Project, projectLogs, ProjectLogsData } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -57,7 +57,7 @@ export default function ProjectDetailPage() {
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
                 >
-                  <GithubIcon className="h-5 w-5" />
+                  <GitBranch className="h-5 w-5" />
                   Code
                 </a>
               )}
@@ -144,7 +144,7 @@ export default function ProjectDetailPage() {
                           </ul>
                         </div>
                       )}
-                      {entry.type === "image" && (
+                      {entry.type === "image" && entry.value && (
                         <div className="rounded-lg overflow-hidden border border-border">
                           <Image
                             src={entry.value}

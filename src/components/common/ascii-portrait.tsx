@@ -86,8 +86,8 @@ export function AsciiPortrait({ text = "MAHESH\nBODA", size = 320 }: { text?: st
   const mouseRef = useRef({ x: -1000, y: -1000, active: false });
   const particlesRef = useRef<Particle[]>([]);
   const startTimeRef = useRef<number | null>(null);
-  const animationIdRef = useRef<number>();
-  const [dataReady, setDataReady] = useState(false);
+  const animationIdRef = useRef<number | null>(null);
+  const [dataReady, setDataReady] = useState<boolean>(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
