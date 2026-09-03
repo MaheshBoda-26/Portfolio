@@ -16,6 +16,165 @@ export interface Project {
   category: "web" | "mobile" | "ai" | "fullstack" | "other";
 }
 
+export interface ProjectLogEntry {
+  type: "text" | "image" | "list" | "tip";
+  value: string;
+  title?: string;
+  items?: string[];
+}
+
+export interface ProjectLog {
+  title: string;
+  content: ProjectLogEntry[];
+}
+
+export interface ProjectLogsData {
+  date: string;
+  logs: ProjectLog[];
+}
+
+export const projectLogs: Record<string, ProjectLogsData> = {
+  resolvex: {
+    date: "March 2024",
+    logs: [
+      {
+        title: "0. Project Genesis",
+        content: [
+          { type: "text", value: "ResolveX started as a response to a common pain point: customer support teams drowning in repetitive tickets while customers wait hours for simple answers. The goal was to build an AI-first support platform that could handle 80% of queries automatically while seamlessly escalating complex issues to humans." },
+          { type: "text", value: "I chose a hybrid architecture: Next.js for the frontend (real-time chat, dashboard), FastAPI for the ML backend (intent classification, response generation), and PostgreSQL with pgvector for semantic search over knowledge bases." },
+        ],
+      },
+      {
+        title: "1. Real-time Chat Infrastructure",
+        content: [
+          { type: "text", value: "WebSocket connections proved trickier than expected. The challenge wasn't just connection management—it was handling reconnection gracefully, message ordering, and presence indicators across multiple tabs." },
+          { type: "list", title: "Key technical decisions:", items: [
+            "Socket.io for automatic fallback and room management",
+            "Redis pub/sub for horizontal scaling across workers",
+            "Optimistic UI updates for instant message appearance",
+            "Message deduplication via client-generated UUIDs",
+          ]},
+        ],
+      },
+      {
+        title: "2. Intent Classification Pipeline",
+        content: [
+          { type: "text", value: "The core ML component classifies incoming messages into 50+ intent categories. Started with a fine-tuned DistilBERT, but latency was too high for real-time chat." },
+          { type: "tip", value: "Switched to a two-stage approach: fast keyword/rule-based router for common intents (80% of traffic), then DistilBERT only for ambiguous cases. Cut p99 latency from 450ms to 80ms." },
+        ],
+      },
+      {
+        title: "3. RAG-Powered Response Generation",
+        content: [
+          { type: "text", value: "For generating responses, I implemented a Retrieval-Augmented Generation pipeline over company knowledge bases. Documents are chunked, embedded with text-embedding-3-small, and stored in pgvector." },
+          { type: "text", value: "The retrieval uses hybrid search: dense vector similarity (cosine) + sparse BM25 keyword matching, combined with reciprocal rank fusion. Reranking with cross-encoder improved relevance by ~23%." },
+        ],
+      },
+      {
+        title: "4. Human-in-the-Loop Escalation",
+        content: [
+          { type: "text", value: "When confidence drops below threshold, the system creates a ticket with full context: conversation history, classified intent, retrieved docs, and suggested response. Agents can accept, edit, or reject—each action feeds back into model retraining." },
+        ],
+      },
+    ],
+  },
+  "rag-pipeline": {
+    date: "January 2024",
+    logs: [
+      {
+        title: "0. Why Build Another RAG?",
+        content: [
+          { type: "text", value: "Existing RAG frameworks (LangChain, LlamaIndex) are great for prototyping but opaque in production. I needed full control over chunking strategies, embedding models, retrieval algorithms, and observability." },
+        ],
+      },
+      {
+        title: "1. Hybrid Search Architecture",
+        content: [
+          { type: "text", value: "Pure dense retrieval misses exact keyword matches. Pure sparse retrieval misses semantic similarity. The solution: run both in parallel and fuse results." },
+          { type: "list", title: "Pipeline stages:", items: [
+            "Document ingestion → semantic chunking (overlap-aware)",
+            "Embedding generation → batch processed, cached",
+            "Dual indexing → pgvector (dense) + PostgreSQL tsvector (sparse)",
+            "Query time → parallel dense + sparse retrieval",
+            "Reciprocal Rank Fusion → combined ranking",
+            "Cross-encoder reranking → top-k refinement",
+            "Answer generation → constrained to retrieved context",
+          ]},
+        ],
+      },
+      {
+        title: "2. Evaluation Framework",
+        content: [
+          { type: "text", value: "Built automated evaluation using synthetic QA pairs generated from documents. Metrics: retrieval@k, answer faithfulness (via LLM judge), latency percentiles, and cost per query." },
+        ],
+      },
+    ],
+  },
+  "rag-trace-debugger": {
+    date: "February 2024",
+    logs: [
+      {
+        title: "0. The Debugging Gap",
+        content: [
+          { type: "text", value: "RAG pipelines are black boxes. When answer quality drops, you need to know: was it retrieval? reranking? generation? Existing tools show logs, not the semantic flow." },
+        ],
+      },
+      {
+        title: "1. Trace Visualization",
+        content: [
+          { type: "text", value: "Each query generates a trace: query embedding → retrieved chunks (with scores) → reranked chunks → generated answer. The UI shows this as an interactive waterfall with expandable chunks, similarity scores, and latency breakdowns." },
+        ],
+      },
+      {
+        title: "2. OpenTelemetry Integration",
+        content: [
+          { type: "text", value: "Instrumented the entire pipeline with OTel spans. Exporters to Jaeger, Grafana Tempo, and console. Custom attributes for chunk IDs, model names, token counts." },
+        ],
+      },
+    ],
+  },
+  "resume-forge": {
+    date: "December 2023",
+    logs: [
+      {
+        title: "0. Problem Space",
+        content: [
+          { type: "text", value: "Job seekers struggle to tailor resumes for each application. ATS systems filter by keyword matching, but most candidates don't know which keywords matter." },
+        ],
+      },
+      {
+        title: "1. LLM-Powered Tailoring",
+        content: [
+          { type: "text", value: "Two-pass approach: first pass extracts required skills/keywords from JD using structured output. Second pass rewrites resume sections to naturally incorporate keywords while preserving truthfulness." },
+        ],
+      },
+      {
+        title: "2. ATS Scoring",
+        content: [
+          { type: "text", value: "Simulated ATS parsing by extracting text from rendered PDF, running keyword overlap analysis, and scoring format compatibility. Provides actionable feedback: 'Add Python to skills', 'Remove columns layout'." },
+        ],
+      },
+    ],
+  },
+  truthlens: {
+    date: "November 2023",
+    logs: [
+      {
+        title: "0. Browser Extension Architecture",
+        content: [
+          { type: "text", value: "Manifest V3 Service Worker background script handles fact-check requests. Content script extracts selected text, sends to background, which calls FastAPI backend with vector search over fact-check databases." },
+        ],
+      },
+      {
+        title: "1. Credibility Scoring",
+        content: [
+          { type: "text", value: "Multi-source verification: Snopes, PolitiFact, FactCheck.org, Wikipedia, and custom claim database. Weighted consensus algorithm produces 0-100 credibility score with source citations." },
+        ],
+      },
+    ],
+  },
+};
+
 export interface SocialLink {
   name: string;
   url: string;
