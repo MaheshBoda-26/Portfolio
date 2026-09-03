@@ -208,5 +208,4 @@ export const navItems = [
   { label: "Projects", href: "#projects" },
   { label: "Hardware", href: "#hardware" },
   { label: "Art", href: "#art" },
-  { label: "Contact", href: "#contact" },
 ];

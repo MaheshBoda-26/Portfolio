@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Mail } from "lucide-react";
-import { GithubIcon, LinkedInIcon, TwitterIcon } from "@/components/common/social-icons";
+import { Menu, X } from "lucide-react";
 import { navItems } from "@/lib/data";
 import { useMobile } from "@/hooks/use-mobile";
 
@@ -21,15 +20,6 @@ export function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const sidebarLinks = [
-    { label: "Home", href: "#hero" },
-    { label: "About", href: "#about" },
-    { label: "Experience", href: "#experience" },
-    { label: "Projects", href: "#projects" },
-    { label: "Hardware", href: "#hardware" },
-    { label: "Art", href: "#art" },
-  ];
 
   return (
     <>
@@ -51,7 +41,7 @@ export function Header() {
               </Link>
             </div>
 
-            {/* Desktop Nav Links + Social Icons */}
+            {/* Desktop Nav Links */}
             <div className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
                 <Link
@@ -62,48 +52,6 @@ export function Header() {
                   {item.label}
                 </Link>
               ))}
-              <Button variant="ghost" size="sm" className="hidden sm:flex">
-                <Link href="#contact" className="flex items-center gap-1">
-                  Contact
-                  <Mail className="h-3 w-3" />
-                </Link>
-              </Button>
-
-              {/* Social Icons */}
-              <a
-                href="mailto:maheshboda@example.com"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Email"
-              >
-                <Mail className="h-5 w-5" />
-              </a>
-              <a
-                href="https://github.com/MaheshBoda-26"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="GitHub"
-              >
-                <GithubIcon className="h-5 w-5" />
-              </a>
-              <a
-                href="https://linkedin.com/in/maheshboda"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="LinkedIn"
-              >
-                <LinkedInIcon className="h-5 w-5" />
-              </a>
-              <a
-                href="https://twitter.com/maheshboda"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Twitter"
-              >
-                <TwitterIcon className="h-5 w-5" />
-              </a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -134,12 +82,6 @@ export function Header() {
                     {item.label}
                   </Link>
                 ))}
-                <Button variant="outline" className="w-full justify-start" onClick={() => setIsMenuOpen(false)}>
-                  <Link href="#contact" className="flex items-center gap-1 w-full">
-                    Contact
-                    <Mail className="h-3 w-3" />
-                  </Link>
-                </Button>
               </div>
             </div>
           )}
