@@ -41,7 +41,7 @@ export function Hardware() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           slash="hardware"
-          title="Hardware <span className='text-primary'>Projects</span>"
+          title={<>Hardware <span className="text-primary">Projects</span></>}
           subtitle="Custom builds, mechanical keyboards, and home lab infrastructure"
           action={
             <a

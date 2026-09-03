@@ -1,10 +1,8 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-
 interface SectionHeaderProps {
   slash: string;
-  title: string;
+  title: React.ReactNode;
   subtitle?: string;
   action?: React.ReactNode;
 }

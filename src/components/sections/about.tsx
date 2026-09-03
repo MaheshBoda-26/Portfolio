@@ -67,7 +67,7 @@ export function About() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           slash="about me"
-          title="Get to know me <span className='text-primary'>better</span>"
+          title={<>Get to know me <span className="text-primary">better</span></>}
           subtitle={personalInfo.bio}
         />
 

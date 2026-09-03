@@ -15,7 +15,7 @@ export function Experience() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           slash="experience"
-          title="Where I've <span className='text-primary'>worked</span>"
+          title={<>Where I've <span className="text-primary">worked</span></>}
           subtitle="My journey building scalable systems and intelligent applications"
         />
 

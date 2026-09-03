@@ -78,7 +78,7 @@ export function Projects() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           slash="software"
-          title="Selected <span className='text-primary'>Work</span>"
+          title={<>Selected <span className="text-primary">Work</span></>}
           subtitle="A collection of projects showcasing my experience in full-stack development, AI/ML, and cloud architecture."
           action={
             <a

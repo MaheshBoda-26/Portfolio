@@ -67,7 +67,7 @@ export function Art() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           slash="art"
-          title="Art <span className='text-primary'>Collection</span>"
+          title={<>Art <span className="text-primary">Collection</span></>}
           subtitle="A collection of digital and traditional artwork exploring different styles and mediums."
           action={
             <a href="#" className="text-primary hover:underline font-medium flex items-center gap-1">
