@@ -1,14 +1,20 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "@mui/material";
 import { navItems } from "@/lib/data";
 import "./SidebarNav.css";
 
 const SidebarNav = () => {
-  const isMobile = useMediaQuery("(max-width: 800px)");
+  const [isMobile, setIsMobile] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("hero");
   const observerRef = useRef<IntersectionObserver | null>(null);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 800);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     if (isMobile) return;
@@ -59,7 +65,6 @@ const SidebarNav = () => {
     >
       <ul className="sidebar-nav-list">
         {navItems.map((item, index) => {
-          const sectionName = item.label.toLowerCase().replace(" ", "-");
           const isActive = activeSection === item.href.replace("#", "");
           return (
             <li key={item.label} className="sidebar-nav-item">

@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/toaster";
+import SidebarNav from "@/components/layout/sidebar-nav";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -82,6 +83,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <Header />
+        <SidebarNav />
         <main className="flex-1">{children}</main>
         <Footer />
         <Toaster />

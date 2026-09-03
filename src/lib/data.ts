@@ -162,49 +162,8 @@ export const projects: Project[] = [
   },
 ];
 
-export const experience: Experience[] = [
-  {
-    id: "exp-1",
-    role: "Senior Software Engineer",
-    company: "Tech Company",
-    period: "2022 - Present",
-    description: [
-      "Led development of AI-powered customer support platform serving 10K+ users",
-      "Architected microservices infrastructure reducing latency by 40%",
-      "Mentored 5 engineers and established code review practices",
-    ],
-    techStack: ["Next.js", "Python", "PostgreSQL", "Kubernetes", "AWS"],
-  },
-  {
-    id: "exp-2",
-    role: "Full Stack Developer",
-    company: "Startup Inc",
-    period: "2020 - 2022",
-    description: [
-      "Built and maintained multiple client projects using React/Node.js",
-      "Implemented CI/CD pipelines reducing deployment time by 60%",
-      "Designed RESTful APIs and GraphQL schemas for mobile apps",
-    ],
-    techStack: ["React", "Node.js", "MongoDB", "Docker", "GraphQL"],
-  },
-  {
-    id: "exp-3",
-    role: "Software Engineer Intern",
-    company: "Big Tech Co",
-    period: "2019 - 2020",
-    description: [
-      "Contributed to internal developer tools and automation scripts",
-      "Optimized database queries improving dashboard load times by 35%",
-      "Wrote unit and integration tests achieving 85% coverage",
-    ],
-    techStack: ["Java", "Spring Boot", "MySQL", "Kafka", "JUnit"],
-  },
-];
-
 export const navItems = [
   { label: "Home", href: "#hero" },
   { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
-  { label: "Art", href: "#art" },
 ];
