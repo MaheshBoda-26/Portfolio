@@ -20,7 +20,7 @@ const CHARS = " .:-=+*#%@".split("");
 const FONT_SIZE = 7;
 const COL_GAP = FONT_SIZE * 0.7;
 const ROW_GAP = FONT_SIZE * 1.1;
-const MAX_PARTICLES = 800; // Performance cap
+const MAX_PARTICLES = 800;
 
 const generateTextParticles = (text: string, canvasSize: number): Particle[] => {
   const offscreen = document.createElement("canvas");
@@ -81,7 +81,79 @@ const generateTextParticles = (text: string, canvasSize: number): Particle[] => 
   return particles;
 };
 
-export function AsciiPortrait({ text = "MAHESH\nBODA", size = 320 }: { text?: string; size?: number }) {
+const generateImageParticles = async (
+  imageSrc: string,
+  canvasSize: number
+): Promise<Particle[]> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      const offscreen = document.createElement("canvas");
+      const offCtx = offscreen.getContext("2d")!;
+
+      // Calculate scaling to fit image in canvas
+      const scale = Math.min(canvasSize / img.width, canvasSize / img.height);
+      const drawWidth = img.width * scale;
+      const drawHeight = img.height * scale;
+      const offsetX = (canvasSize - drawWidth) / 2;
+      const offsetY = (canvasSize - drawHeight) / 2;
+
+      offscreen.width = canvasSize;
+      offscreen.height = canvasSize;
+
+      // Draw image centered
+      offCtx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+
+      const imageData = offCtx.getImageData(0, 0, canvasSize, canvasSize);
+      const pixels = imageData.data;
+
+      const particles: Particle[] = [];
+
+      for (let y = 0; y < canvasSize; y += ROW_GAP) {
+        for (let x = 0; x < canvasSize; x += COL_GAP) {
+          if (particles.length >= MAX_PARTICLES) break;
+
+          const i = (Math.floor(y) * canvasSize + Math.floor(x)) * 4;
+          const a = pixels[i + 3];
+
+          if (a > 128) {
+            const r = pixels[i];
+            const g = pixels[i + 1];
+            const b = pixels[i + 2];
+            const brightness = (r + g + b) / (3 * 255);
+            const charIndex = Math.floor(brightness * (CHARS.length - 1));
+
+            particles.push({
+              x: x + (Math.random() - 0.5) * 400,
+              y: y + (Math.random() - 0.5) * 400,
+              targetX: x,
+              targetY: y,
+              vx: 0,
+              vy: 0,
+              char: CHARS[charIndex],
+              baseAlpha: 0.4 + brightness * 0.6,
+              currentAlpha: 0,
+              delay: Math.random() * 0.4,
+              shimmer: Math.random() * Math.PI * 2,
+            });
+          }
+        }
+        if (particles.length >= MAX_PARTICLES) break;
+      }
+
+      resolve(particles);
+    };
+    img.onerror = () => reject(new Error("Failed to load image"));
+    img.src = imageSrc;
+  });
+};
+
+export function AsciiPortrait({
+  text = "MAHESH\nBODA",
+  size = 320,
+  imageSrc,
+}: { text?: string; size?: number; imageSrc?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: -1000, y: -1000, active: false });
   const particlesRef = useRef<Particle[]>([]);
@@ -90,6 +162,7 @@ export function AsciiPortrait({ text = "MAHESH\nBODA", size = 320 }: { text?: st
   const [dataReady, setDataReady] = useState<boolean>(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [useImage, setUseImage] = useState(false);
 
   useEffect(() => {
     setIsMobile(window.innerWidth <= 768);
@@ -107,100 +180,118 @@ export function AsciiPortrait({ text = "MAHESH\nBODA", size = 320 }: { text?: st
   }, []);
 
   useEffect(() => {
-    const particles = generateTextParticles(text, size);
-    particlesRef.current = particles;
-    startTimeRef.current = performance.now();
-    setDataReady(true);
+    const initParticles = async () => {
+      let particles: Particle[];
 
-    if (prefersReducedMotion) {
-      // Static render for reduced motion
-      const canvas = canvasRef.current;
-      if (canvas) {
-        const ctx = canvas.getContext("2d");
-        if (ctx) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.font = `${FONT_SIZE}px monospace`;
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          particles.forEach((p) => {
-            ctx.fillStyle = `rgba(100, 255, 218, ${p.baseAlpha})`;
-            ctx.fillText(p.char, p.targetX, p.targetY);
-          });
+      if (imageSrc) {
+        try {
+          particles = await generateImageParticles(imageSrc, size);
+          setUseImage(true);
+        } catch {
+          // Fallback to text if image fails
+          particles = generateTextParticles(text, size);
+          setUseImage(false);
         }
+      } else {
+        particles = generateTextParticles(text, size);
+        setUseImage(false);
       }
-      return;
-    }
 
-    const animate = (time: number) => {
-      if (!startTimeRef.current) startTimeRef.current = time;
-      const elapsed = (time - startTimeRef.current) / 1000;
+      particlesRef.current = particles;
+      startTimeRef.current = performance.now();
+      setDataReady(true);
 
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.font = `${FONT_SIZE}px monospace`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-
-      const mouseActive = mouseRef.current.active;
-      const mouseX = mouseRef.current.x;
-      const mouseY = mouseRef.current.y;
-
-      particlesRef.current.forEach((p) => {
-        const elapsedSinceStart = elapsed - p.delay;
-        if (elapsedSinceStart < 0) return;
-
-        const dx = p.targetX - p.x;
-        const dy = p.targetY - p.y;
-
-        const mx = mouseX - p.x;
-        const my = mouseY - p.y;
-        const mDist = Math.hypot(mx, my);
-
-        const spring = 0.03;
-        const damp = 0.85;
-        const repelStrength = isMobile ? 4000 : 8000; // Weaker repel on mobile
-
-        p.vx += dx * spring;
-        p.vy += dy * spring;
-
-        if (mouseActive && mDist < 150 && mDist > 0) {
-          const force = (repelStrength / (mDist * mDist)) * (1 - mDist / 150);
-          p.vx -= (mx / mDist) * force;
-          p.vy -= (my / mDist) * force;
+      if (prefersReducedMotion) {
+        const canvas = canvasRef.current;
+        if (canvas) {
+          const ctx = canvas.getContext("2d");
+          if (ctx) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = `${FONT_SIZE}px monospace`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            particles.forEach((p) => {
+              ctx.fillStyle = `rgba(100, 255, 218, ${p.baseAlpha})`;
+              ctx.fillText(p.char, p.targetX, p.targetY);
+            });
+          }
         }
+        return;
+      }
 
-        p.vx *= damp;
-        p.vy *= damp;
-        p.x += p.vx;
-        p.y += p.vy;
+      const animate = (time: number) => {
+        if (!startTimeRef.current) startTimeRef.current = time;
+        const elapsed = (time - startTimeRef.current) / 1000;
 
-        p.currentAlpha = Math.min(p.currentAlpha + 0.02, p.baseAlpha);
+        const canvas = canvasRef.current;
+        if (!canvas) return;
 
-        const shimmerAlpha = Math.sin(elapsed * 3 + p.shimmer) * 0.1;
-        const alpha = Math.max(0, Math.min(1, p.currentAlpha + shimmerAlpha));
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
 
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = `rgba(100, 255, 218, ${alpha})`;
-        ctx.fillText(p.char, p.x, p.y);
-      });
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = `${FONT_SIZE}px monospace`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
 
-      ctx.globalAlpha = 1;
+        const mouseActive = mouseRef.current.active;
+        const mouseX = mouseRef.current.x;
+        const mouseY = mouseRef.current.y;
+
+        particlesRef.current.forEach((p) => {
+          const elapsedSinceStart = elapsed - p.delay;
+          if (elapsedSinceStart < 0) return;
+
+          const dx = p.targetX - p.x;
+          const dy = p.targetY - p.y;
+
+          const mx = mouseX - p.x;
+          const my = mouseY - p.y;
+          const mDist = Math.hypot(mx, my);
+
+          const spring = 0.03;
+          const damp = 0.85;
+          const repelStrength = isMobile ? 4000 : 8000;
+
+          p.vx += dx * spring;
+          p.vy += dy * spring;
+
+          if (mouseActive && mDist < 150 && mDist > 0) {
+            const force = (repelStrength / (mDist * mDist)) * (1 - mDist / 150);
+            p.vx -= (mx / mDist) * force;
+            p.vy -= (my / mDist) * force;
+          }
+
+          p.vx *= damp;
+          p.vy *= damp;
+          p.x += p.vx;
+          p.y += p.vy;
+
+          p.currentAlpha = Math.min(p.currentAlpha + 0.02, p.baseAlpha);
+
+          const shimmerAlpha = Math.sin(elapsed * 3 + p.shimmer) * 0.1;
+          const alpha = Math.max(0, Math.min(1, p.currentAlpha + shimmerAlpha));
+
+          ctx.globalAlpha = alpha;
+          ctx.fillStyle = `rgba(100, 255, 218, ${alpha})`;
+          ctx.fillText(p.char, p.x, p.y);
+        });
+
+        ctx.globalAlpha = 1;
+        animationIdRef.current = requestAnimationFrame(animate);
+      };
+
       animationIdRef.current = requestAnimationFrame(animate);
     };
 
-    animationIdRef.current = requestAnimationFrame(animate);
+    initParticles();
 
     return () => {
       if (animationIdRef.current) {
         cancelAnimationFrame(animationIdRef.current);
       }
     };
-  }, [text, size, prefersReducedMotion, isMobile]);
+  }, [text, size, imageSrc, prefersReducedMotion, isMobile]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
     if (prefersReducedMotion) return;
@@ -255,7 +346,7 @@ export function AsciiPortrait({ text = "MAHESH\nBODA", size = 320 }: { text?: st
       onTouchEnd={handleTouchEnd}
       aria-hidden="true"
       role="img"
-      aria-label="ASCII art portrait"
+      aria-label={useImage ? "ASCII art portrait from photo" : "ASCII art text portrait"}
     />
   );
 }

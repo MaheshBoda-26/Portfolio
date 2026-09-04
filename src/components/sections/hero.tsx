@@ -13,7 +13,7 @@ export function Hero() {
     <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center pt-16 px-4 overflow-hidden">
       <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12 px-4">
         {/* Left side - Text content */}
-        <div className="text-center lg:text-left max-w-2xl flex-1">
+        <div className="text-left max-w-2xl flex-1">
           <p className="text-primary font-mono text-sm mb-6 animate-fade-in-up">
             <TypeAnimation
               sequence={[
@@ -34,12 +34,12 @@ export function Hero() {
             {personalInfo.name}
           </h1>
 
-          <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-2xl lg:mx-0 animate-fade-in-up" style={{ animationDelay: "1000ms" }}>
+          <p className="text-xl sm:text-2xl text-muted-foreground mb-12 max-w-2xl animate-fade-in-up" style={{ animationDelay: "1000ms" }}>
             {personalInfo.tagline}
           </p>
 
           {/* CTA Buttons - simplified */}
-          <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4 animate-fade-in-up" style={{ animationDelay: "1200ms" }}>
+          <div className="flex flex-col sm:flex-row items-start justify-start gap-4 animate-fade-in-up" style={{ animationDelay: "1200ms" }}>
             <a href="#projects" className="text-primary hover:underline font-medium flex items-center gap-2">
               / software
               <ExternalLink className="h-4 w-4" />
@@ -51,7 +51,7 @@ export function Hero() {
           </div>
 
           {/* Social links - minimal */}
-          <div className="flex items-center justify-center lg:justify-start gap-8 mt-12 animate-fade-in-up" style={{ animationDelay: "1400ms" }}>
+          <div className="flex items-center justify-start gap-8 mt-12 animate-fade-in-up" style={{ animationDelay: "1400ms" }}>
             {socialLinks.slice(0, 3).map((link) => (
               <a
                 key={link.name}
@@ -70,9 +70,9 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Right side - ASCII Portrait */}
-        <div className="flex items-center justify-center lg:justify-end w-full lg:w-auto animate-fade-in-up" style={{ animationDelay: "600ms" }}>
-          <AsciiPortrait text="MAHESH\nBODA" size={320} />
+        {/* Right side - ASCII Portrait from photo */}
+        <div className="flex items-center justify-end w-full lg:w-auto animate-fade-in-up" style={{ animationDelay: "600ms" }}>
+          <AsciiPortrait imageSrc="/photo.jpg" size={320} />
         </div>
       </div>
 
