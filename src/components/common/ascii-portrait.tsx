@@ -17,7 +17,7 @@ interface Particle {
 }
 
 const CHARS = " .:-=+*#%@".split("");
-const FONT_SIZE = 18;
+const FONT_SIZE = 10;
 const COL_GAP = FONT_SIZE * 0.7;
 const ROW_GAP = FONT_SIZE * 1.3;
 const MAX_PARTICLES = 800;
