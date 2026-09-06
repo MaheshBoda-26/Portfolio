@@ -10,6 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
+const BASE_URL = "https://maheshboda.dev";
+
 const categoryLabels: Record<Project["category"], string> = {
   web: "Web App",
   mobile: "Mobile",
@@ -18,6 +20,34 @@ const categoryLabels: Record<Project["category"], string> = {
   other: "Other",
 };
 
+function generateProjectSchema(project: Project) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: project.title,
+    description: project.description,
+    url: `${BASE_URL}/project/${project.id}`,
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Cloud",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+    },
+    author: {
+      "@type": "Person",
+      name: "Mahesh Boda",
+      url: BASE_URL,
+    },
+    keywords: project.techStack.join(", "),
+    datePublished: "2024-01-01",
+    dateModified: new Date().toISOString().split("T")[0],
+    ...(project.githubUrl && { codeRepository: project.githubUrl }),
+    ...(project.liveUrl && { downloadUrl: project.liveUrl }),
+  };
+}
+
 interface ProjectDetailClientProps {
   project: Project;
   logs: ProjectLogsData | null;
@@ -25,9 +55,14 @@ interface ProjectDetailClientProps {
 
 export default function ProjectDetailClient({ project, logs }: ProjectDetailClientProps) {
   const router = useRouter();
+  const projectSchema = generateProjectSchema(project);
 
   return (
     <div className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
+      />
       <header className="border-b border-border bg-background/95 backdrop-blur-sm sticky top-0 z-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
