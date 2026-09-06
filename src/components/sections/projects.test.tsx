@@ -79,7 +79,8 @@ describe("Projects Section", () => {
   it("renders section header with correct title", () => {
     render(<Projects />);
 
-    expect(screen.getByText("Selected Work")).toBeInTheDocument();
+    expect(screen.getByText("Selected")).toBeInTheDocument();
+    expect(screen.getByText("Work")).toBeInTheDocument();
   });
 
   it("renders search input", () => {
@@ -104,15 +105,19 @@ describe("Projects Section", () => {
     const searchInput = screen.getByPlaceholderText("Search projects...");
     fireEvent.change(searchInput, { target: { value: "RAG" } });
 
+    // Wait for debounce (300ms) + filter
     await waitFor(() => {
       expect(screen.getByText("RAG Pipeline with Hybrid Search")).toBeInTheDocument();
       expect(screen.getByText("RAG Trace Debugger")).toBeInTheDocument();
-    });
+    }, { timeout: 1000 });
+
+    // Wait a bit more for debounce to complete
+    await new Promise(resolve => setTimeout(resolve, 400));
 
     // Other projects should not be visible (or filtered out)
-    expect(screen.queryByText("ResolveX")).not.toBeInTheDocument();
-    expect(screen.queryByText("ResumeForge")).not.toBeInTheDocument();
-    expect(screen.queryByText("TruthLens")).not.toBeInTheDocument();
+    expect(screen.queryAllByText("ResolveX")).toHaveLength(0);
+    expect(screen.queryAllByText("ResumeForge")).toHaveLength(0);
+    expect(screen.queryAllByText("TruthLens")).toHaveLength(0);
   });
 
   it("filters projects by category", async () => {
@@ -127,6 +132,8 @@ describe("Projects Section", () => {
     });
 
     expect(screen.queryByText("ResolveX")).not.toBeInTheDocument();
+    expect(screen.queryByText("ResumeForge")).not.toBeInTheDocument();
+    expect(screen.queryByText("TruthLens")).not.toBeInTheDocument();
   });
 
   it("shows featured projects when Featured filter is selected", async () => {
@@ -153,7 +160,9 @@ describe("Projects Section", () => {
 
     projects.forEach((project) => {
       project.techStack.slice(0, 8).forEach((tech) => {
-        expect(screen.getByText(tech)).toBeInTheDocument();
+        expect(screen.getAllByText(tech)).toHaveLength(
+          projects.filter(p => p.techStack.includes(tech)).length
+        );
       });
     });
   });
@@ -161,13 +170,19 @@ describe("Projects Section", () => {
   it("renders action links for projects", () => {
     render(<Projects />);
 
+    // Check that each project has its action links
+    expect(screen.getAllByText("View Details")).toHaveLength(projects.length);
+
     projects.forEach((project) => {
-      expect(screen.getByText("View Details")).toBeInTheDocument();
       if (project.githubUrl) {
-        expect(screen.getByText("Code")).toBeInTheDocument();
+        expect(screen.getAllByText("Code")).toHaveLength(
+          projects.filter(p => p.githubUrl).length
+        );
       }
       if (project.liveUrl) {
-        expect(screen.getByText("Live")).toBeInTheDocument();
+        expect(screen.getAllByText("Live")).toHaveLength(
+          projects.filter(p => p.liveUrl).length
+        );
       }
     });
   });
