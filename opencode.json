@@ -1,0 +1,59 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "explabs": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Experiential Labs",
+      "options": {
+        "baseURL": "https://api.experientiallabs.ai/v1",
+        "apiKey": "{env:EXPLABS_API_KEY}"
+      },
+      "models": {
+        "claude-opus-4": {
+          "name": "claude-opus-4",
+          "limit": {
+            "context": 200000,
+            "output": 8192
+          },
+          "cost": {
+            "input": 15,
+            "output": 75
+          }
+        },
+        "claude-sonnet-4": {
+          "name": "claude-sonnet-4",
+          "limit": {
+            "context": 1000000,
+            "output": 8192
+          },
+          "cost": {
+            "input": 3,
+            "output": 15
+          }
+        },
+        "gpt-5": {
+          "name": "gpt-5",
+          "limit": {
+            "context": 400000,
+            "output": 8192
+          },
+          "cost": {
+            "input": 0.61,
+            "output": 2.94
+          }
+        },
+        "gpt-4o": {
+          "name": "gpt-4o",
+          "limit": {
+            "context": 128000,
+            "output": 8192
+          },
+          "cost": {
+            "input": 0.61,
+            "output": 2.94
+          }
+        }
+      }
+    }
+  }
+}
