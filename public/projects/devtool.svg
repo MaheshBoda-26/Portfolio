@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a192f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#112240;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#64ffda;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1de9b6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg-gradient)"/>
+  <rect x="180" y="180" width="200" height="200" rx="16" fill="none" stroke="url(#accent-gradient)" stroke-width="2" opacity="0.5"/>
+  <rect x="420" y="180" width="200" height="200" rx="16" fill="none" stroke="url(#accent-gradient)" stroke-width="2" opacity="0.5"/>
+  <line x1="220" y1="230" x2="340" y2="230" stroke="url(#accent-gradient)" stroke-width="2" opacity="0.6"/>
+  <line x1="220" y1="260" x2="320" y2="260" stroke="url(#accent-gradient)" stroke-width="1" opacity="0.4"/>
+  <line x1="220" y1="290" x2="330" y2="290" stroke="url(#accent-gradient)" stroke-width="1" opacity="0.4"/>
+  <line x1="460" y1="230" x2="580" y2="230" stroke="url(#accent-gradient)" stroke-width="2" opacity="0.6"/>
+  <line x1="460" y1="260" x2="560" y2="260" stroke="url(#accent-gradient)" stroke-width="1" opacity="0.4"/>
+  <line x1="460" y1="290" x2="570" y2="290" stroke="url(#accent-gradient)" stroke-width="1" opacity="0.4"/>
+  <line x1="380" y1="330" x2="420" y2="330" stroke="url(#accent-gradient)" stroke-width="3" opacity="0.7"/>
+  <polygon points="415,325 415,335 425,330" fill="url(#accent-gradient)" opacity="0.7"/>
+  <text x="400" y="480" font-family="system-ui, sans-serif" font-size="28" font-weight="600" fill="#ccd6f6" text-anchor="middle">devtool</text>
+  <text x="400" y="520" font-family="system-ui, sans-serif" font-size="16" fill="#8892b0" text-anchor="middle">GitHub Browser + Job Search</text>
+</svg>

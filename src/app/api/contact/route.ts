@@ -1,60 +1,67 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+
+const contactSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  subject: z.string().min(5, "Subject must be at least 5 characters"),
+  message: z.string().min(20, "Message must be at least 20 characters"),
+});
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, subject, message } = body;
 
-    if (!name || !email || !subject || !message) {
+    // Validate the request body
+    const validationResult = contactSchema.safeParse(body);
+
+    if (!validationResult.success) {
       return NextResponse.json(
-        { error: "All fields are required" },
+        {
+          message: "Validation failed",
+          errors: validationResult.error.flatten().fieldErrors
+        },
         { status: 400 }
       );
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: "Invalid email address" },
-        { status: 400 }
-      );
-    }
+    const { name, email, subject, message } = validationResult.data;
 
-    // In production, you would integrate with:
-    // - Formspree, EmailJS, SendGrid, Resend, Nodemailer, etc.
-    // - Or save to a database
-    // For now, we'll just log and return success
-
-    console.log("Contact form submission:", { name, email, subject, message });
-
-    // Example integration with Resend (uncomment and configure):
-    /*
-    const { Resend } = await import("resend");
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
-    await resend.emails.send({
-      from: "Portfolio Contact <onboarding@resend.dev>",
-      to: ["your-email@example.com"],
-      subject: `Portfolio Contact: ${subject}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Subject:</strong> ${subject}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, "<br>")}</p>
-      `,
+    // For now, just log the contact form submission
+    // In production, you would integrate with an email service like Resend, SendGrid, or Nodemailer
+    console.log("Contact form submission:", {
+      name,
+      email,
+      subject,
+      message,
+      timestamp: new Date().toISOString(),
     });
-    */
+
+    // Simulate email sending delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // In a real implementation, you would send an email here:
+    // await sendEmail({
+    //   to: "maheshboda@example.com",
+    //   subject: `Portfolio Contact: ${subject}`,
+    //   html: `
+    //     <h2>New Contact Form Submission</h2>
+    //     <p><strong>Name:</strong> ${name}</p>
+    //     <p><strong>Email:</strong> ${email}</p>
+    //     <p><strong>Subject:</strong> ${subject}</p>
+    //     <p><strong>Message:</strong></p>
+    //     <p>${message.replace(/\n/g, "<br>")}</p>
+    //   `,
+    // });
 
     return NextResponse.json(
-      { message: "Message sent successfully" },
+      { message: "Message sent successfully!" },
       { status: 200 }
     );
   } catch (error) {
     console.error("Contact form error:", error);
     return NextResponse.json(
-      { error: "Failed to process request" },
+      { message: "Internal server error" },
       { status: 500 }
     );
   }

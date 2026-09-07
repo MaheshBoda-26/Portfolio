@@ -141,3 +141,110 @@ export {
   ToastClose,
   ToastAction,
 };
+
+const TOAST_LIMIT = 5;
+const TOAST_REMOVE_DELAY = 5000;
+
+type Toast = ToastProps & {
+  id: string;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
+  action?: ToastActionElement;
+};
+
+let count = 0;
+
+function genId() {
+  count = (count + 1) % Number.MAX_SAFE_INTEGER;
+  return count.toString();
+}
+
+type ToastState = {
+  toasts: Toast[];
+};
+
+const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
+
+function addToRemoveQueue(toastId: string) {
+  if (toastTimeouts.has(toastId)) {
+    return;
+  }
+
+  const timeout = setTimeout(() => {
+    toastTimeouts.delete(toastId);
+    dispatch({ type: "REMOVE_TOAST", toastId });
+  }, TOAST_REMOVE_DELAY);
+
+  toastTimeouts.set(toastId, timeout);
+}
+
+function dispatch(action: { type: string; toastId?: string; toast?: Toast }) {
+  listener(action);
+}
+
+const listeners: Array<(action: { type: string; toastId?: string; toast?: Toast }) => void> = [];
+
+function listener(action: { type: string; toastId?: string; toast?: Toast }) {
+  listeners.forEach((listener) => listener(action));
+}
+
+function addListener(listenerFn: (action: { type: string; toastId?: string; toast?: Toast }) => void) {
+  listeners.push(listenerFn);
+  return () => {
+    const index = listeners.indexOf(listenerFn);
+    if (index > -1) {
+      listeners.splice(index, 1);
+    }
+  };
+}
+
+function toast({ ...props }: Omit<Toast, "id">) {
+  const id = genId();
+
+  const newToast: Toast = {
+    ...props,
+    id,
+    open: true,
+    onOpenChange: (open: boolean) => {
+      if (!open) {
+        dispatch({ type: "REMOVE_TOAST", toastId: id });
+      }
+    },
+  };
+
+  dispatch({ type: "ADD_TOAST", toast: newToast });
+  addToRemoveQueue(id);
+
+  return { id, dismiss: () => dispatch({ type: "REMOVE_TOAST", toastId: id }), update: (props: Partial<Toast>) => dispatch({ type: "UPDATE_TOAST", toast: { ...newToast, ...props } }) };
+}
+
+export function useToast() {
+  const [state, setState] = React.useState<ToastState>({ toasts: [] });
+
+  React.useEffect(() => {
+    const cleanup = addListener((action) => {
+      if (action.type === "ADD_TOAST") {
+        setState((prev) => {
+          const newToasts = [action.toast!, ...prev.toasts].slice(0, TOAST_LIMIT);
+          return { toasts: newToasts };
+        });
+      } else if (action.type === "REMOVE_TOAST") {
+        setState((prev) => ({
+          toasts: prev.toasts.filter((t) => t.id !== action.toastId),
+        }));
+      } else if (action.type === "UPDATE_TOAST") {
+        setState((prev) => ({
+          toasts: prev.toasts.map((t) => (t.id === action.toast!.id ? action.toast! : t)),
+        }));
+      }
+    });
+
+    return cleanup;
+  }, []);
+
+  return {
+    ...state,
+    toast,
+    dismiss: (toastId?: string) => dispatch({ type: "REMOVE_TOAST", toastId }),
+  };
+}

@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "analyze": "ANALYZE=true next build"
   },
   "allowScripts": [
     "unrs-resolver",
@@ -37,6 +38,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^16.3.4",
     "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/jest-dom": "^6.4.0",
     "@testing-library/react": "^16.0.0",

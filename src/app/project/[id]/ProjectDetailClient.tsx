@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, GitBranch, ExternalLink, Code2, Server, Database, Zap, FileText } from "lucide-react";
+import { ArrowLeft, GitBranch, ExternalLink, Code2, Zap, FileText } from "lucide-react";
 import { projects, Project, ProjectLogsData } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -105,6 +105,18 @@ export default function ProjectDetailClient({ project, logs }: ProjectDetailClie
       <main className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12">
         {/* Hero Section */}
         <article className="mb-16 animate-fade-in-up">
+          {project.image && (
+            <div className="relative aspect-video rounded-xl overflow-hidden mb-8 border border-border">
+              <Image
+                src={project.image}
+                alt={`${project.title} screenshot`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
+            </div>
+          )}
           <div className="flex flex-wrap gap-2 mb-6">
             <Badge variant="outline" className="tech-badge">
               {categoryLabels[project.category]}

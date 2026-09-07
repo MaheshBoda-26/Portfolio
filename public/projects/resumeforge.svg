@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a192f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#112240;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#64ffda;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1de9b6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg-gradient)"/>
+  <rect x="220" y="150" width="360" height="300" rx="8" fill="none" stroke="url(#accent-gradient)" stroke-width="2" opacity="0.5"/>
+  <line x1="260" y1="220" x2="540" y2="220" stroke="url(#accent-gradient)" stroke-width="2" opacity="0.6"/>
+  <line x1="260" y1="260" x2="480" y2="260" stroke="url(#accent-gradient)" stroke-width="1" opacity="0.4"/>
+  <line x1="260" y1="300" x2="520" y2="300" stroke="url(#accent-gradient)" stroke-width="1" opacity="0.4"/>
+  <line x1="260" y1="340" x2="440" y2="340" stroke="url(#accent-gradient)" stroke-width="1" opacity="0.4"/>
+  <line x1="260" y1="380" x2="500" y2="380" stroke="url(#accent-gradient)" stroke-width="1" opacity="0.4"/>
+  <rect x="360" y="420" width="80" height="12" rx="4" fill="url(#accent-gradient)" opacity="0.3"/>
+  <text x="400" y="480" font-family="system-ui, sans-serif" font-size="28" font-weight="600" fill="#ccd6f6" text-anchor="middle">ResumeForge</text>
+  <text x="400" y="520" font-family="system-ui, sans-serif" font-size="16" fill="#8892b0" text-anchor="middle">AI Resume Builder & ATS Optimizer</text>
+</svg>

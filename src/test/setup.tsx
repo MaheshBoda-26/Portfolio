@@ -73,7 +73,7 @@ vi.mock("@base-ui/react/input", () => ({
 }));
 
 vi.mock("@base-ui/react/merge-props", () => ({
-  mergeProps: <T extends string>(...props: React.ComponentProps<T>[]) =>
+  mergeProps: (...props: Record<string, unknown>[]) =>
     Object.assign({}, ...props),
 }));
 
@@ -89,16 +89,16 @@ vi.mock("@base-ui/react/use-render", () => ({
     render?: React.ReactNode;
     state: Record<string, unknown>;
   }) => {
-    const Component = defaultTagName as keyof JSX.IntrinsicElements;
-    return <Component {...props} {...state} />;
+    const { createElement } = require("react");
+    return createElement(defaultTagName, { ...props, ...state });
   },
 }));
 
 // Mock class-variance-authority
 vi.mock("class-variance-authority", () => ({
   cva: (base: string, config: Record<string, unknown>) => {
-    const variants = config.variants || {};
-    const defaultVariants = config.defaultVariants || {};
+    const variants = (config.variants as Record<string, Record<string, string>>) || {};
+    const defaultVariants = (config.defaultVariants as Record<string, string>) || {};
 
     return (props: Record<string, unknown> = {}) => {
       let className = base;

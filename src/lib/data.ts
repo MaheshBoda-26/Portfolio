@@ -173,6 +173,61 @@ export const projectLogs: Record<string, ProjectLogsData> = {
       },
     ],
   },
+  "kisan-mitra-ai": {
+    date: "March 2026",
+    logs: [
+      {
+        title: "0. Project Genesis",
+        content: [
+          { type: "text", value: "Kisan Mitra AI was born from a desire to bridge the gap between complex agricultural science and local farmers in India. Most farmers lack access to timely, accurate information about crops, weather, pests, and market prices." },
+          { type: "text", value: "The vision was to create a multi-lingual, voice-enabled AI advisor that could communicate in local languages (Hindi, Telugu, English) and provide actionable intelligence for farming decisions." },
+        ],
+      },
+      {
+        title: "1. Multi-lingual Voice Architecture",
+        content: [
+          { type: "text", value: "Built a voice interface using ElevenLabs for speech synthesis and browser SpeechRecognition API for transcription. The challenge was handling multiple Indian languages and accents accurately." },
+          { type: "list", title: "Key technical decisions:", items: [
+            "ElevenLabs for high-quality multilingual TTS",
+            "Browser native SpeechRecognition for zero-cost STT",
+            "Language detection via user preference + browser locale",
+            "Offline-first caching for poor connectivity areas",
+          ]},
+        ],
+      },
+      {
+        title: "2. AI-Powered Crop Advisory",
+        content: [
+          { type: "text", value: "Integrated weather APIs, soil data, and seasonal patterns to recommend optimal crops with confidence scores. Used rule-based engine combined with ML for region-specific recommendations." },
+          { type: "tip", value: "Crop recommendations factor in Kharif/Rabi/Zaid seasons, soil type, temperature ranges, and historical yield data for the farmer's district." },
+        ],
+      },
+      {
+        title: "3. Vision AI for Disease Detection",
+        content: [
+          { type: "text", value: "Implemented crop disease identification using computer vision. Farmers upload leaf photos and get instant analysis with organic/chemical treatment options." },
+          { type: "list", title: "Pipeline:", items: [
+            "Image preprocessing & augmentation",
+            "Custom trained model for common Indian crop diseases",
+            "Confidence thresholding to reduce false positives",
+            "Treatment recommendations with safety warnings",
+          ]},
+        ],
+      },
+      {
+        title: "4. Real-time Market Intelligence",
+        content: [
+          { type: "text", value: "Integrated with government mandi price APIs to provide live commodity prices across states. Built trend analysis to show price movements (increasing/decreasing/stable)." },
+        ],
+      },
+      {
+        title: "5. Offline-First SMS/Email Advisories",
+        content: [
+          { type: "text", value: "For farmers with limited internet, built automated SMS (160-char) and HTML email alerts combining weather warnings, price spikes, and farming reminders." },
+        ],
+      },
+    ],
+  },
 };
 
 export interface SocialLink {
@@ -256,7 +311,7 @@ export const projects: Project[] = [
     description: "A full-stack AI-powered customer support platform with real-time chat, automated ticket triage, and intelligent response suggestions. Built with Next.js, FastAPI, PostgreSQL, and WebSocket connections for real-time updates.",
     shortDescription: "AI-powered customer support platform with real-time chat and automated triage",
     techStack: ["Next.js", "FastAPI", "PostgreSQL", "WebSockets", "Redis", "OpenAI"],
-    image: "/projects/resolvex.png",
+    image: "/projects/resolvex.svg",
     githubUrl: "https://github.com/MaheshBoda-26/ResolveX",
     liveUrl: "https://resolvex.demo.com",
     featured: true,
@@ -268,7 +323,7 @@ export const projects: Project[] = [
     description: "A next-generation farming advisor that bridges agricultural science and local farmers using AI. Features multi-lingual voice interaction (Hindi, Telugu, English), intelligent crop suggestions based on region/season/soil, disease identification via Vision AI, real-time mandi market prices, pest & fertilizer advisories, and SMS/email alerts for offline access.",
     shortDescription: "Multi-lingual voice-enabled AI farming advisor with crop suggestions, disease ID, and market prices",
     techStack: ["React", "TypeScript", "Vite", "Tailwind CSS", "shadcn/ui", "TanStack Query", "ElevenLabs", "Weather API"],
-    image: "/projects/kisan-mitra.png",
+    image: "/projects/kisan-mitra.jpg",
     githubUrl: "https://github.com/MaheshBoda-26/AI-Agent-For-Farming",
     liveUrl: "https://ai-agent-for-farming.vercel.app",
     featured: true,
@@ -280,7 +335,7 @@ export const projects: Project[] = [
     description: "Production-ready Retrieval-Augmented Generation pipeline combining dense vector search with sparse keyword search (BM25). Features document chunking, embedding generation, reranking, and evaluation metrics.",
     shortDescription: "Hybrid search RAG pipeline with dense + sparse retrieval and reranking",
     techStack: ["Python", "FastAPI", "PostgreSQL", "pgvector", "LangChain", "LangGraph"],
-    image: "/projects/rag-pipeline.png",
+    image: "/projects/rag-pipeline.jpg",
     githubUrl: "https://github.com/MaheshBoda-26/RAG-Pipeline-With-Hybrid-Search",
     liveUrl: "https://rag-pipeline-with-hybrid-search.vercel.app",
     featured: true,
@@ -292,7 +347,7 @@ export const projects: Project[] = [
     description: "Observability tool for debugging RAG pipelines with trace visualization, latency analysis, and retrieval quality metrics. Helps identify bottlenecks in retrieval and generation stages.",
     shortDescription: "Observability and debugging tool for RAG pipeline traces",
     techStack: ["React", "TypeScript", "FastAPI", "PostgreSQL", "OpenTelemetry"],
-    image: "/projects/rag-trace.png",
+    image: "/projects/rag-trace.svg",
     githubUrl: "https://github.com/MaheshBoda-26/RAG-Trace-Debugger",
     liveUrl: undefined,
     featured: true,
@@ -304,7 +359,7 @@ export const projects: Project[] = [
     description: "AI-powered resume builder and optimizer that tailors resumes to job descriptions using LLMs. Features ATS scoring, keyword optimization, and multiple template options.",
     shortDescription: "AI resume builder with ATS optimization and job matching",
     techStack: ["Next.js", "Python", "OpenAI", "Tailwind CSS", "PostgreSQL"],
-    image: "/projects/resumeforge.png",
+    image: "/projects/resumeforge.svg",
     githubUrl: "https://github.com/MaheshBoda-26/ResumeForge",
     liveUrl: "https://resumeforge.demo.com",
     featured: false,
@@ -316,7 +371,7 @@ export const projects: Project[] = [
     description: "Fact-checking browser extension that analyzes claims in real-time using multiple verification sources. Provides credibility scores and source citations for any selected text.",
     shortDescription: "Real-time fact-checking browser extension with credibility scoring",
     techStack: ["TypeScript", "Chrome Extension API", "FastAPI", "Vector Search"],
-    image: "/projects/truthlens.png",
+    image: "/projects/truthlens.svg",
     githubUrl: "https://github.com/MaheshBoda-26/TruthLens",
     liveUrl: undefined,
     featured: false,
@@ -328,7 +383,7 @@ export const projects: Project[] = [
     description: "A full-stack AI-powered customer support system with automated ticket triage, intelligent response generation, and human-in-the-loop escalation. Built with a modern Python/TypeScript stack using Docker for containerization.",
     shortDescription: "Full-stack AI customer support system with automated triage and response generation",
     techStack: ["Python", "TypeScript", "Docker", "PostgreSQL", "FastAPI", "React"],
-    image: "/projects/ai-support.png",
+    image: "/projects/ai-support.svg",
     githubUrl: "https://github.com/MaheshBoda-26/AI-Customer-Support-Agent-",
     liveUrl: undefined,
     featured: false,
@@ -340,7 +395,7 @@ export const projects: Project[] = [
     description: "A dual-purpose React utility combining a GitHub repository browser with an Adzuna job search engine. Features dark mode, responsive design, and modern React 19 patterns with Vite.",
     shortDescription: "GitHub repo browser + Adzuna job search in one React utility",
     techStack: ["React 19", "TypeScript", "Vite", "Tailwind CSS", "GitHub API", "Adzuna API"],
-    image: "/projects/devtool.png",
+    image: "/projects/devtool.jpg",
     githubUrl: "https://github.com/MaheshBoda-26/devtool",
     liveUrl: "https://devtool-omega.vercel.app",
     featured: false,
